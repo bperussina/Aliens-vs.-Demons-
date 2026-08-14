@@ -1,6 +1,6 @@
 <!--
 Sync Impact Report
-- Version change: 1.1.0 → 1.2.0 (King is the computer; bullets from robot head-wire; no extra PC/turret)
+- Version change: 1.2.0 → 1.3.0 (Place two turrets, then buy more from Shop for $10)
 - Modified principles: template placeholders → I–V below
 - Added sections: Art Direction, Technology Stack, Development Workflow
 - Removed sections: none (template slots filled)
@@ -46,7 +46,12 @@ The king IS the computer. There is no extra machine sitting in the base.
 The king MUST stay alive and MUST be click-moved. Demons hunt the king.
 
 Bullets MUST come out of the wire on the robot's head, in the direction that
-wire is pointing. No separate turret object on a PC.
+wire is pointing. No extra computer sitting in the base.
+
+The player starts with two turrets to place by clicking the map. After those
+are down, clicking the map MUST NOT place more until the player buys extras.
+A Shop control MUST sit next to the money. A turret costs $10. Unplaced turret
+count MUST show next to the skills.
 
 The game MUST open on a title menu. A match MUST NOT start until Single Player.
 The King Demon MUST NOT enter the fight in this slice (chair cutscene only).
@@ -108,4 +113,4 @@ wording), and go through a pull request.
 All PRs MUST be checked against Principles I–V and the Art Direction and
 Technology Stack sections. Unjustified complexity MUST be rejected.
 
-**Version**: 1.2.0 | **Ratified**: 2026-08-13 | **Last Amended**: 2026-08-13
+**Version**: 1.3.0 | **Ratified**: 2026-08-13 | **Last Amended**: 2026-08-13

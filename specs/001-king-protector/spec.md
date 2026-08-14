@@ -1,12 +1,12 @@
 # Feature Specification: King Protector Arena
 
-**Feature Branch**: `feat/waves-combat-skills`
+**Feature Branch**: `feat/turret-shop`
 
 **Created**: 2026-08-13
 
 **Status**: Draft
 
-**Input**: Title menu, then Single Player: Level at the top, 10-second combat countdown, King Demon cutscene (chair only). The king IS the computer (no extra PC in the base). Bullets auto-fire out of the wire on the robot's head, in the direction the wire points. Normal demons have four-quarter health; each bullet is half a quarter. Number-key skills. $10 per kill, saved. Wave 50 wins the round.
+**Input**: Title menu, then Single Player. The king IS the computer. Robot wire-gun plus two placeable turrets. After both are placed, map clicks do not plant more. Shop next to the money sells extra turrets for $10. Unplaced count sits next to skills. Waves, skills, $10 per kill, Wave 50 wins.
 
 ## User Scenarios & Testing *(mandatory)*
 
@@ -43,6 +43,17 @@ Clearing wave 50 wins the round and the player gains a level. Multiplayer level-
 
 There is no extra computer sitting in the base. The king is the computer. Click-move the king. Demons hunt the king. Esc returns to the menu.
 
+### User Story 6 - Place two turrets, then buy more (Priority: P1)
+
+The player starts with two turrets. Click the map once to plant the first, click another place to plant the second. After that, clicking the map does not place a turret. Top-right, next to the money, a Shop button opens a shop. A turret costs $10. Next to the skills, the HUD shows how many unplaced turrets are left.
+
+**Acceptance Scenarios**:
+
+1. **Given** a fresh match, **When** the player looks next to the skills, **Then** it shows 2 turrets.
+2. **Given** 2 unplaced turrets, **When** the player clicks two different map spots (king not selected), **Then** two turrets stand there and the count is 0.
+3. **Given** 0 unplaced turrets, **When** the player clicks the map, **Then** no new turret appears.
+4. **Given** at least $10, **When** the player clicks Shop then buys a turret, **Then** coins drop by $10 and the turret count goes up by 1 so they can click the map to place it.
+
 ## Requirements *(mandatory)*
 
 - **FR-001**: Launch MUST be the green title menu.
@@ -58,10 +69,14 @@ There is no extra computer sitting in the base. The king is the computer. Click-
 - **FR-010**: Clearing a wave MUST start the next wave until wave 50.
 - **FR-011**: Clearing wave 50 MUST win the round and increase Level by 1.
 - **FR-012**: Multiplayer level-making MUST stay locked until Level 50 and $1000.
+- **FR-014**: The player MUST start with 2 unplaced turrets. A map click MUST place one when stock remains and the king is not selected.
+- **FR-015**: Map clicks MUST NOT place a turret when stock is 0.
+- **FR-016**: A Shop button MUST sit next to the money. Buying a turret MUST cost $10 and add 1 to unplaced stock.
+- **FR-017**: Unplaced turret count MUST appear next to the skills.
 
 ## Key Entities
 
-- **King** (the computer you protect), **Robot** (wire-gun), **Normal Demon**, **King Demon** (cutscene only), **Wave**, **Coins**, **Level**
+- **King** (the computer you protect), **Robot** (wire-gun), **Turret** (placed by the player), **Shop**, **Normal Demon**, **King Demon** (cutscene only), **Wave**, **Coins**, **Level**
 
 ## Success Criteria
 
@@ -70,10 +85,12 @@ There is no extra computer sitting in the base. The king is the computer. Click-
 - **SC-003**: First spawn after the cutscene is a normal demon on Wave 1.
 - **SC-004**: Eight wire-gun hits kill a normal demon; coins go up $10 and persist.
 - **SC-005**: Wave 50 clear levels the player up.
+- **SC-006**: Two map clicks plant the starting turrets; a third map click plants nothing until a $10 shop buy.
 
 ## Assumptions
 
 - Wave N spawns `min(N, 10)` normal demons.
 - Skills target nearby demons and have cooldowns.
-- Save file stores coins and level on disk.
+- Save file stores coins, level, and unplaced turret stock on disk. New saves start with 2 turrets.
+- Placed turrets auto-fire at nearby demons. The robot wire-gun still fires the way the wire points.
 - Live online multiplayer is still later; unlock only reveals that tools are coming.

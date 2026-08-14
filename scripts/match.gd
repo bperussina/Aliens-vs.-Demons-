@@ -1,25 +1,34 @@
 extends Node2D
 
 const DEMON_SCENE := preload("res://scenes/demon.tscn")
+const TURRET_SCENE := preload("res://scenes/turret.tscn")
 const COUNTDOWN_SECONDS := 10.0
 const CUTSCENE_SECONDS := 4.5
 const FINAL_WAVE := 50
+const MIN_KING_GAP := 110.0
+const MIN_TURRET_GAP := 72.0
 
 enum Phase { COUNTDOWN, CUTSCENE, WAVE, WON }
 
 @onready var _king: CharacterBody2D = $King
 @onready var _hud: CanvasLayer = $Hud
+@onready var _arena: Node2D = $Arena
 
 var _phase: Phase = Phase.COUNTDOWN
 var _clock: float = COUNTDOWN_SECONDS
 var _wave: int = 1
 var _alive: int = 0
+var _ghost: Node2D
 
 
 func _ready() -> void:
 	_hud.set_level(SaveData.level)
 	_hud.set_status("Combat starting in 10 seconds")
 	_hud.show_cutscene(false)
+	_ghost = TURRET_SCENE.instantiate()
+	_ghost.preview = true
+	_ghost.z_index = 20
+	add_child(_ghost)
 
 
 func _process(delta: float) -> void:
@@ -42,18 +51,75 @@ func _process(delta: float) -> void:
 			pass
 		Phase.WON:
 			pass
+	_update_ghost()
 
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event.is_action_pressed("ui_cancel"):
+		if _hud.shop_open:
+			_hud.set_shop_open(false)
+			get_viewport().set_input_as_handled()
+			return
 		SceneFlow.go(SceneFlow.MENU)
 		get_viewport().set_input_as_handled()
 		return
 	if event is InputEventMouseButton:
 		var mouse := event as InputEventMouseButton
 		if mouse.pressed and mouse.button_index == MOUSE_BUTTON_LEFT:
-			_king.move_to(get_global_mouse_position())
+			_on_map_click(get_global_mouse_position())
 			get_viewport().set_input_as_handled()
+
+
+func _on_map_click(world_pos: Vector2) -> void:
+	if _hud.shop_open:
+		_hud.set_shop_open(false)
+		return
+	if _king.selected:
+		_king.move_to(world_pos)
+		return
+	if not _can_place():
+		return
+	if not _spot_ok(world_pos):
+		return
+	if not SaveData.consume_turret():
+		return
+	var turret: Node2D = TURRET_SCENE.instantiate()
+	turret.global_position = world_pos
+	add_child(turret)
+
+
+func _can_place() -> bool:
+	return (
+		SaveData.turrets > 0
+		and _phase != Phase.CUTSCENE
+		and not _hud.shop_open
+		and not _king.selected
+	)
+
+
+func _spot_ok(world_pos: Vector2) -> bool:
+	var half: Vector2 = _arena.SIZE * 0.5
+	if absf(world_pos.x) > half.x - 40.0 or absf(world_pos.y) > half.y - 40.0:
+		return false
+	if world_pos.distance_to(_king.global_position) < MIN_KING_GAP:
+		return false
+	for node in get_tree().get_nodes_in_group("turrets"):
+		var placed := node as Node2D
+		if placed and world_pos.distance_to(placed.global_position) < MIN_TURRET_GAP:
+			return false
+	return true
+
+
+func _update_ghost() -> void:
+	if _ghost == null:
+		return
+	var show := _can_place()
+	_ghost.visible = show
+	if not show:
+		return
+	var pos := get_global_mouse_position()
+	_ghost.global_position = pos
+	_ghost.preview_ok = _spot_ok(pos)
 
 
 func _start_wave(wave: int) -> void:
