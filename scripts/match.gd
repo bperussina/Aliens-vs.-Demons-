@@ -98,11 +98,16 @@ func _on_map_click(world_pos: Vector2) -> void:
 func _can_place() -> bool:
 	return (
 		SaveData.turrets > 0
+		and _placed_count() < SaveData.MAX_PLACED
 		and _phase != Phase.CUTSCENE
 		and _phase != Phase.LOST
 		and not _hud.shop_open
 		and not _king.selected
 	)
+
+
+func _placed_count() -> int:
+	return get_tree().get_nodes_in_group("turrets").size()
 
 
 func _spot_ok(world_pos: Vector2) -> bool:
