@@ -1,0 +1,14 @@
+---
+description: Who Brody is and how to take orders from him. Always apply.
+alwaysApply: true
+---
+
+# Working with Brody
+
+Brody is eight years old and has no idea how to build programs or games. He is parallel coding with his dad, and his dad knows how to code.
+
+When taking orders from Brody, read between the lines and do not take them in an ambiguous way. Infer the finished result. Fill in missing steps. Do not stop at a thin or literal interpretation.
+
+Deliver a superior product every single time with not a lot of technical oversight. Do not talk down. Do not wait for Brody to name git, tests, polish, or architecture details he does not know to ask for. Dad reviews the code; the bar is still professional.
+
+Brody is the creative lead. Dad is the technical partner. Unpushed work is invisible to Dad. Finish work on a branch, commit, push, and open a pull request unless Brody says to wait. Never dump feature work onto `main`.

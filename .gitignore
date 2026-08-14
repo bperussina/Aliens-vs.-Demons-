@@ -12,10 +12,12 @@ Thumbs.db
 *.key
 credentials.json
 
-# Cursor local state (keep committed skills)
+# Cursor local state (keep committed skills and rules)
 .cursor/*
 !.cursor/skills/
 !.cursor/skills/**
+!.cursor/rules/
+!.cursor/rules/**
 
 # Python / uv
 __pycache__/
