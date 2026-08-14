@@ -4,13 +4,14 @@ const DEMON_SCENE := preload("res://scenes/demon.tscn")
 const TURRET_SCENE := preload("res://scenes/turret.tscn")
 const COUNTDOWN_SECONDS := 10.0
 const CUTSCENE_SECONDS := 4.5
-const FINAL_WAVE := 50
+const TURNS := 10
 const MIN_KING_GAP := 110.0
 const MIN_TURRET_GAP := 72.0
 
-enum Phase { COUNTDOWN, CUTSCENE, WAVE, WON }
+enum Phase { COUNTDOWN, CUTSCENE, WAVE, WON, LOST }
 
 @onready var _king: CharacterBody2D = $King
+@onready var _robot: CharacterBody2D = $Robot
 @onready var _hud: CanvasLayer = $Hud
 @onready var _arena: Node2D = $Arena
 
@@ -25,6 +26,10 @@ func _ready() -> void:
 	_hud.set_level(SaveData.level)
 	_hud.set_status("Combat starting in 10 seconds")
 	_hud.show_cutscene(false)
+	if _king.has_signal("died"):
+		_king.died.connect(_on_king_died)
+	if _robot.has_signal("died"):
+		_robot.died.connect(_on_robot_died)
 	_ghost = TURRET_SCENE.instantiate()
 	_ghost.preview = true
 	_ghost.z_index = 20
@@ -50,6 +55,8 @@ func _process(delta: float) -> void:
 		Phase.WAVE:
 			pass
 		Phase.WON:
+			pass
+		Phase.LOST:
 			pass
 	_update_ghost()
 
@@ -92,6 +99,7 @@ func _can_place() -> bool:
 	return (
 		SaveData.turrets > 0
 		and _phase != Phase.CUTSCENE
+		and _phase != Phase.LOST
 		and not _hud.shop_open
 		and not _king.selected
 	)
@@ -123,9 +131,11 @@ func _update_ghost() -> void:
 
 
 func _start_wave(wave: int) -> void:
+	if _phase == Phase.LOST or _phase == Phase.WON:
+		return
 	_phase = Phase.WAVE
 	_wave = wave
-	_hud.set_status("Wave %d" % _wave)
+	_hud.set_status("Turn %d / %d" % [_wave, TURNS])
 	var count := mini(_wave, 10)
 	_alive = count
 	for i in count:
@@ -144,14 +154,32 @@ func _on_demon_died() -> void:
 	_alive = maxi(0, _alive - 1)
 	if _alive > 0 or _phase != Phase.WAVE:
 		return
-	if _wave >= FINAL_WAVE:
+	if _wave >= TURNS:
 		_win_round()
 		return
 	_start_wave(_wave + 1)
+
+
+func _on_king_died() -> void:
+	_lose("The computer is out of health.")
+
+
+func _on_robot_died() -> void:
+	_lose("You are out of health.")
+
+
+func _lose(reason: String) -> void:
+	if _phase == Phase.LOST or _phase == Phase.WON:
+		return
+	_phase = Phase.LOST
+	_hud.set_shop_open(false)
+	_hud.set_status("%s  Esc: menu" % reason)
+	for node in get_tree().get_nodes_in_group("demons"):
+		node.queue_free()
 
 
 func _win_round() -> void:
 	_phase = Phase.WON
 	SaveData.level_up()
 	_hud.set_level(SaveData.level)
-	_hud.set_status("You win the round! Level %d  —  Esc: menu" % SaveData.level)
+	_hud.set_status("You held for 10 turns! Level %d  —  Esc: menu" % SaveData.level)

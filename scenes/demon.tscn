@@ -15,4 +15,5 @@ script = ExtResource("1_demon")
 shape = SubResource("CircleShape2D_demon")
 
 [node name="HealthBar" type="Node2D" parent="."]
+position = Vector2(0, -72)
 script = ExtResource("2_bar")
