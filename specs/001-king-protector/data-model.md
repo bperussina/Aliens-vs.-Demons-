@@ -26,6 +26,19 @@ In-memory match objects. Nothing is saved between runs in this baseline.
 - Look: person with installed robot eyes
 - Health bar above body
 
+## Turret
+
+- `position`: world point chosen by a map click
+- `preview`: ghost that follows the cursor while stock remains
+- Auto-fires at the nearest demon in range
+- Relationships: spawned by Match; consumes one unplaced turret from SaveData
+
+## Shop
+
+- Button next to coins
+- Sells one turret for $10
+- Relationships: SaveData coins and turret stock
+
 ## Arena
 
 - Bounded rectangle the camera scrolls across
