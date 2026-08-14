@@ -116,13 +116,13 @@ func _build_shop() -> void:
 	row.add_theme_constant_override("separation", 16)
 	column.add_child(row)
 
-	var icon := Control.new()
+	var icon := TextureRect.new()
 	icon.custom_minimum_size = Vector2(56, 56)
+	icon.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	icon.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_CENTERED
 	icon.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	icon.draw.connect(_draw_shop_turret.bind(icon))
-	icon.resized.connect(icon.queue_redraw)
+	icon.texture = preload("res://assets/sprites/turret.png")
 	row.add_child(icon)
-	icon.queue_redraw()
 
 	var info := VBoxContainer.new()
 	info.size_flags_horizontal = Control.SIZE_EXPAND_FILL
@@ -178,11 +178,3 @@ func _box(color: Color) -> StyleBoxFlat:
 	box.content_margin_top = 8
 	box.content_margin_bottom = 8
 	return box
-
-
-func _draw_shop_turret(icon: Control) -> void:
-	var center := icon.size * 0.5
-	icon.draw_circle(center, 22.0, Color("2f3640"))
-	icon.draw_circle(center, 16.0, Color("4a5564"))
-	icon.draw_line(center + Vector2(6, 0), center + Vector2(24, 0), Color("c5d2e0"), 7.0, true)
-	icon.draw_circle(center + Vector2(24, 0), 5.0, Color("ffe08a"))

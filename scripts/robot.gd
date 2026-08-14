@@ -35,11 +35,16 @@ func _process(delta: float) -> void:
 
 
 func muzzle_global() -> Vector2:
+	var marker := _visual.get_node_or_null("Muzzle") as Node2D
+	if marker:
+		return marker.global_position
 	return _visual.to_global(WIRE_TIP)
 
 
 func wire_heading() -> Vector2:
-	return (muzzle_global() - _visual.to_global(WIRE_BASE)).normalized()
+	var base := _visual.get_node_or_null("WireBase") as Node2D
+	var from := base.global_position if base else _visual.to_global(WIRE_BASE)
+	return (muzzle_global() - from).normalized()
 
 
 func _fire_from_wire() -> void:

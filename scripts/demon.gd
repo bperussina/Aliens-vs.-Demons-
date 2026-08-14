@@ -2,13 +2,11 @@ extends CharacterBody2D
 
 signal died
 
+const TEX := preload("res://assets/sprites/demon.png")
+const HEIGHT := 112.0
+const OFFSET := Vector2(0, 6)
 const MAX_HITS := 8
-const QUARTERS := 4
 const SPEED := 70.0
-const SKIN := Color("d8b090")
-const SHIRT := Color("6a4a3a")
-const EYE_METAL := Color("9ad0e8")
-const EYE_LENS := Color("2ef0ff")
 
 var hits_left: int = MAX_HITS
 var _slow_until_ms: int = 0
@@ -18,6 +16,7 @@ var _slow_until_ms: int = 0
 
 func _ready() -> void:
 	add_to_group("demons")
+	GameArt.attach(self, TEX, HEIGHT, OFFSET)
 	queue_redraw()
 	_bar.queue_redraw()
 
@@ -40,7 +39,7 @@ func _physics_process(_delta: float) -> void:
 	if king == null:
 		return
 	var to_king := king.global_position - global_position
-	if to_king.length() < 50.0:
+	if to_king.length() < 70.0:
 		velocity = Vector2.ZERO
 		move_and_slide()
 		return
@@ -52,12 +51,6 @@ func _physics_process(_delta: float) -> void:
 
 
 func _draw() -> void:
-	draw_circle(Vector2(0, 22), 16.0, Color("3a322c"), true, -1.0, true)
-	draw_rect(Rect2(-16, -8, 32, 36), SHIRT, true, -1.0, true)
-	draw_circle(Vector2(0, -22), 20.0, SKIN, true, -1.0, true)
-	draw_circle(Vector2(-8, -24), 7.0, EYE_METAL, true, -1.0, true)
-	draw_circle(Vector2(8, -24), 7.0, EYE_METAL, true, -1.0, true)
-	draw_circle(Vector2(-8, -24), 3.5, EYE_LENS, true, -1.0, true)
-	draw_circle(Vector2(8, -24), 3.5, EYE_LENS, true, -1.0, true)
-	draw_rect(Rect2(-11, -6, 8, 22), SKIN, true, -1.0, true)
-	draw_rect(Rect2(3, -6, 8, 22), SKIN, true, -1.0, true)
+	var shadow := Color(0.05, 0.07, 0.04, 0.35)
+	draw_set_transform(Vector2(0, 46), 0.0, Vector2(1.15, 0.38))
+	draw_circle(Vector2.ZERO, 22.0, shadow, true, -1.0, true)

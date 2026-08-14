@@ -1,5 +1,6 @@
 extends Area2D
 
+const TEX := preload("res://assets/sprites/bullet.png")
 const SPEED := 520.0
 
 var damage: int = 1
@@ -9,18 +10,18 @@ var tint := Color("ffe08a")
 
 func _ready() -> void:
 	body_entered.connect(_on_body_entered)
-	queue_redraw()
+	var sprite := Sprite2D.new()
+	sprite.texture = TEX
+	sprite.scale = Vector2(0.55, 0.55)
+	sprite.modulate = tint
+	add_child(sprite)
 
 
 func _physics_process(delta: float) -> void:
 	global_position += velocity * delta
+	rotation = velocity.angle()
 	if global_position.length() > 4000.0:
 		queue_free()
-
-
-func _draw() -> void:
-	draw_circle(Vector2.ZERO, 6.0, tint, true, -1.0, true)
-	draw_circle(Vector2.ZERO, 3.0, Color.WHITE, true, -1.0, true)
 
 
 func _on_body_entered(body: Node) -> void:

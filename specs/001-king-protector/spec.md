@@ -1,6 +1,6 @@
 # Feature Specification: King Protector Arena
 
-**Feature Branch**: `feat/turret-shop`
+**Feature Branch**: `feat/illustrated-art`
 
 **Created**: 2026-08-13
 
@@ -91,6 +91,7 @@ The player starts with two turrets. Click the map once to plant the first, click
 
 - Wave N spawns `min(N, 10)` normal demons.
 - Skills target nearby demons and have cooldowns.
+- Characters and the battlefield use painted sprites in `assets/sprites` and `assets/textures`.
 - Save file stores coins, level, and unplaced turret stock on disk. New saves start with 2 turrets.
 - Placed turrets auto-fire at nearby demons. The robot wire-gun still fires the way the wire points.
 - Live online multiplayer is still later; unlock only reveals that tools are coming.
