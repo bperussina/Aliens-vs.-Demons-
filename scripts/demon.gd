@@ -36,18 +36,18 @@ func apply_slow(seconds: float) -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	var pc := get_tree().get_first_node_in_group("pc") as Node2D
-	if pc == null:
+	var king := get_tree().get_first_node_in_group("king") as Node2D
+	if king == null:
 		return
-	var to_pc := pc.global_position - global_position
-	if to_pc.length() < 40.0:
+	var to_king := king.global_position - global_position
+	if to_king.length() < 50.0:
 		velocity = Vector2.ZERO
 		move_and_slide()
 		return
 	var speed := SPEED
 	if Time.get_ticks_msec() < _slow_until_ms:
 		speed *= 0.4
-	velocity = to_pc.normalized() * speed
+	velocity = to_king.normalized() * speed
 	move_and_slide()
 
 

@@ -39,7 +39,7 @@ text = "Aliens vs. Demons"
 
 [node name="Subtitle" type="Label" parent="Center/Column"]
 layout_mode = 2
-text = "Protect the PC. Keep the king alive."
+text = "Protect the king. The king is the computer."
 
 [node name="Spacer" type="Control" parent="Center/Column"]
 custom_minimum_size = Vector2(0, 12)

@@ -1,6 +1,6 @@
 <!--
 Sync Impact Report
-- Version change: 1.0.0 → 1.1.0 (Protect the PC; title menu before match; demons deferred)
+- Version change: 1.1.0 → 1.2.0 (King is the computer; bullets from robot head-wire; no extra PC/turret)
 - Modified principles: template placeholders → I–V below
 - Added sections: Art Direction, Technology Stack, Development Workflow
 - Removed sections: none (template slots filled)
@@ -41,18 +41,15 @@ tactics.
 **Rationale**: Movement, swarms, and protecting the king all read clearly from
 this angle.
 
-### IV. Protect the PC, Keep the King
-A PC sits in the middle of the match. That machine is what the team is
-defending. The king is the strongest protector of the PC, so the king MUST stay
-alive. The king MUST be selectable and movable by click. If the king's health
-reaches zero, the player loses.
+### IV. Protect the King Computer
+The king IS the computer. There is no extra machine sitting in the base.
+The king MUST stay alive and MUST be click-moved. Demons hunt the king.
 
-The game MUST open on a title menu (green field, Single Player, Multiplayer,
-Settings). A match MUST NOT start until the player chooses Single Player.
-Demons MUST NOT appear until a later combat slice.
+Bullets MUST come out of the wire on the robot's head, in the direction that
+wire is pointing. No separate turret object on a PC.
 
-**Rationale**: Brody's picture: log in, pick a mode, then protect the PC with
-the king you can walk around.
+The game MUST open on a title menu. A match MUST NOT start until Single Player.
+The King Demon MUST NOT enter the fight in this slice (chair cutscene only).
 
 ### V. Complete Slices
 A slice MUST be playable, named clearly, on a branch, pushed to GitHub, and
@@ -65,9 +62,8 @@ cannot be reviewed.
 
 ## Art Direction
 
-The king MUST match this picture: a large blob of skin for a head, two eyes,
-and a clay piece for a mouth. Under the head, a large white cardboard box with
-a hole poked through it, showing yellow paper inside.
+The king IS the computer: a finished illustrated desktop (monitor, tower, keys),
+not a second machine sitting next to a person.
 
 Demons MUST read as people who have had robot eyes installed.
 
@@ -112,4 +108,4 @@ wording), and go through a pull request.
 All PRs MUST be checked against Principles I–V and the Art Direction and
 Technology Stack sections. Unjustified complexity MUST be rejected.
 
-**Version**: 1.1.0 | **Ratified**: 2026-08-13 | **Last Amended**: 2026-08-13
+**Version**: 1.2.0 | **Ratified**: 2026-08-13 | **Last Amended**: 2026-08-13

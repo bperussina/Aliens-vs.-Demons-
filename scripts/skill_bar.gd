@@ -85,9 +85,11 @@ func _cast(slot: int) -> void:
 
 
 func _muzzle() -> Vector2:
-	var robot := get_tree().get_first_node_in_group("robot") as Node2D
-	if robot:
-		return robot.global_position
+	var robot := get_tree().get_first_node_in_group("robot")
+	if robot and robot.has_method("muzzle_global"):
+		return robot.muzzle_global()
+	if robot is Node2D:
+		return (robot as Node2D).global_position
 	return Vector2.ZERO
 
 

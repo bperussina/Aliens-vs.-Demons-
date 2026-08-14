@@ -1,4 +1,4 @@
-[gd_scene load_steps=4 format=3 uid="uid://demonavd00001"]
+[gd_scene format=3 uid="uid://demonavd00001"]
 
 [ext_resource type="Script" path="res://scripts/demon.gd" id="1_demon"]
 [ext_resource type="Script" path="res://scripts/health_bar.gd" id="2_bar"]
