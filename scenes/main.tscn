@@ -1,13 +1,17 @@
-[gd_scene load_steps=7 format=3 uid="uid://b8avdmain0001"]
+[gd_scene load_steps=9 format=3 uid="uid://b8avdmain0001"]
 
 [ext_resource type="Script" path="res://scripts/match.gd" id="1_match"]
 [ext_resource type="Script" path="res://scripts/arena.gd" id="2_arena"]
-[ext_resource type="Script" path="res://scripts/king.gd" id="3_king"]
-[ext_resource type="Script" path="res://scripts/robot.gd" id="4_robot"]
-[ext_resource type="Script" path="res://scripts/robot_visual.gd" id="5_robot_visual"]
+[ext_resource type="Script" path="res://scripts/pc.gd" id="3_pc"]
+[ext_resource type="Script" path="res://scripts/king.gd" id="4_king"]
+[ext_resource type="Script" path="res://scripts/robot.gd" id="5_robot"]
+[ext_resource type="Script" path="res://scripts/robot_visual.gd" id="6_robot_visual"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_robot"]
 radius = 30.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_king"]
+radius = 52.0
 
 [node name="Match" type="Node2D"]
 script = ExtResource("1_match")
@@ -15,21 +19,58 @@ script = ExtResource("1_match")
 [node name="Arena" type="Node2D" parent="."]
 script = ExtResource("2_arena")
 
-[node name="King" type="Node2D" parent="."]
+[node name="PC" type="Node2D" parent="."]
+z_index = 1
+script = ExtResource("3_pc")
+
+[node name="King" type="CharacterBody2D" parent="."]
+z_index = 2
+position = Vector2(120, 90)
+collision_layer = 2
+collision_mask = 0
+script = ExtResource("4_king")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="King"]
 position = Vector2(0, 40)
-script = ExtResource("3_king")
+shape = SubResource("CircleShape2D_king")
+
+[node name="ClickArea" type="Area2D" parent="King"]
+collision_layer = 4
+collision_mask = 0
+input_pickable = true
+monitorable = false
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="King/ClickArea"]
+position = Vector2(0, 24)
+shape = SubResource("CircleShape2D_king")
 
 [node name="Robot" type="CharacterBody2D" parent="."]
-position = Vector2(-180, 40)
-script = ExtResource("4_robot")
+z_index = 3
+position = Vector2(-200, 80)
+collision_layer = 1
+collision_mask = 0
+script = ExtResource("5_robot")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Robot"]
 shape = SubResource("CircleShape2D_robot")
 
 [node name="Visual" type="Node2D" parent="Robot"]
-script = ExtResource("5_robot_visual")
+script = ExtResource("6_robot_visual")
 
 [node name="Camera2D" type="Camera2D" parent="Robot"]
 position_smoothing_enabled = true
 position_smoothing_speed = 8.0
 zoom = Vector2(0.92, 0.92)
+
+[node name="Hud" type="CanvasLayer" parent="."]
+
+[node name="Hint" type="Label" parent="Hud"]
+offset_left = 24.0
+offset_top = 20.0
+offset_right = 900.0
+offset_bottom = 64.0
+mouse_filter = 2
+theme_override_font_sizes/font_size = 22
+text = "Guard the PC. Click the king, then click the ground to walk him. Esc: menu"
+
+[connection signal="input_event" from="King/ClickArea" to="King" method="_on_click_area_input_event"]

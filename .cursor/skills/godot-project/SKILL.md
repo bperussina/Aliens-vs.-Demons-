@@ -21,7 +21,7 @@ godot --headless --path . --quit
 - 2D only. Linear texture filter (`default_texture_filter=1`). Pixel snap **off**. 2D MSAA on.
 - Camera follows the robot (`Camera2D` child of `Robot`).
 - Placeholders and sprites stay smooth illustration — no nearest-neighbor hero art.
-- Main scene: `scenes/main.tscn`.
+- Main scene: `scenes/main_menu.tscn` (title). Match: `scenes/main.tscn`.
 
 ## Layout
 

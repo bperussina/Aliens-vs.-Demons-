@@ -11,7 +11,8 @@ A spec-driven game. Specifications in this repo are the source of truth; code fo
 
 1. Open **Godot 4.7.1** (`/Applications/Godot.app`).
 2. Import this repo folder.
-3. Press **Play** (F5). Move with **WASD** or arrows. The camera follows the robot.
+3. Press **Play** (F5). You should see a **green title menu**.
+4. **Single Player** loads the match (PC in the middle, click-move the king). **Esc** returns to the menu.
 
 ```bash
 export PATH="$HOME/.local/bin:$PATH"
