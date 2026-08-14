@@ -24,6 +24,11 @@ __pycache__/
 .python-version
 uv.lock
 
+# Godot 4 generated
+.godot/
+*.translation
+export_presets.cfg
+
 # Logs and temp
 *.log
 tmp/
