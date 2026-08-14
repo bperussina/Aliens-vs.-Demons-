@@ -1,50 +1,111 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!--
+Sync Impact Report
+- Version change: (none) → 1.0.0
+- Modified principles: template placeholders → I–V below
+- Added sections: Art Direction, Technology Stack, Development Workflow
+- Removed sections: none (template slots filled)
+- Follow-up TODOs: none
+-->
+
+# Aliens vs. Demons Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Spec Before Play
+Every gameplay change MUST have a spec that says what the player sees and does
+before code is written. Specs describe the game, not the engine. Plans describe
+the stack and scenes. Unspecified behavior MUST NOT ship.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+**Rationale**: Brody and Dad build in parallel. A written spec is the shared
+picture of the game so neither side guesses.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### II. Illustrated Craft, Never Pixel
+The game MUST look like a skilled illustrator's smooth drawings, not pixel art
+and not scribbles. Textures MUST stay painterly and anti-aliased. Nearest-neighbor
+pixel scaling, mosaic/pixelate filters, crayon/scribble fills, and "retro 8-bit"
+styling are forbidden.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+Characters MAY be made of craft materials (clay, cardboard, paper, skin-like
+forms) but those materials MUST be drawn as finished illustration, not photos
+of junk and not child-scribble placeholders.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+**Rationale**: The look is a core part of the game, not a later coat of paint.
 
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
+### III. Vampire Survivors Camera
+The play camera MUST be a top-down action camera in the Vampire Survivors
+family: the world is seen from above, the view follows the robot the player
+controls, and the battlefield scrolls smoothly as the robot moves. The camera
+MUST NOT be first-person, third-person over-the-shoulder, or locked isometric
+tactics.
 
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
+**Rationale**: Movement, swarms, and protecting the king all read clearly from
+this angle.
 
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
+### IV. Protect the King
+The player is the robot. The king is the thing that must be kept alive. If the
+king's health reaches zero, the player loses. Combat, movement, and UI MUST
+make that goal obvious: the king is selectable and movable, demons are threats,
+and health is visible.
 
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+**Rationale**: This is the game. Side systems that hide that fantasy MUST NOT
+ship in the baseline.
+
+### V. Complete Slices
+A slice MUST be playable, named clearly, on a branch, pushed to GitHub, and
+opened as a pull request unless Brody or Dad says to wait. Feature work MUST
+NOT land straight on `main`. Placeholder art MUST still obey Principle II
+(smooth illustration, not pixels or scribbles).
+
+**Rationale**: Dad reviews in parallel. Invisible or half-broken local work
+cannot be reviewed.
+
+## Art Direction
+
+The king MUST match this picture: a large blob of skin for a head, two eyes,
+and a clay piece for a mouth. Under the head, a large white cardboard box with
+a hole poked through it, showing yellow paper inside.
+
+Demons MUST read as people who have had robot eyes installed.
+
+The robot is the player hero and MUST look like a finished illustrated robot,
+not a stick figure or pixel sprite.
+
+Health bars sit above combatants so remaining health is readable at a glance
+during a swarm.
+
+## Technology Stack
+
+The game MUST be built in **Godot 4** as a **2D** project using **GDScript**.
+
+- 2D renderer with **linear** texture filtering (smooth). Pixel snap and
+  nearest-neighbor filtering are forbidden except for debug overlays.
+- Native `Camera2D` follow for the Vampire Survivors-style view.
+- High-resolution illustrated sprites and textures (PNG/WebP with
+  transparency), not tileset pixel atlases as the hero look.
+- Export targets: desktop first (macOS / Windows). Web export is allowed later
+  and MUST NOT drive art or control decisions.
+
+This stack is the project default. Changing it requires a constitution
+amendment, not a silent rewrite.
+
+## Development Workflow
+
+1. Constitution and specs live in this repo and are the source of truth.
+2. Use Spec Kit skills in order: specify → clarify (if needed) → plan →
+   tasks → implement.
+3. Branch from latest `main` (`feat/`, `fix/`, `spec/`, `chore/`).
+4. One concern per pull request. Dad reviews; do not merge your own feature
+   PR unless asked.
+5. Keep Spec Kit upgrades on their own chore branches.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
+This constitution supersedes informal chat instructions when they conflict.
+Amendments MUST update this file, bump the version (MAJOR for removed or
+redefined principles, MINOR for new principles or stack changes, PATCH for
+wording), and go through a pull request.
 
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+All PRs MUST be checked against Principles I–V and the Art Direction and
+Technology Stack sections. Unjustified complexity MUST be rejected.
+
+**Version**: 1.0.0 | **Ratified**: 2026-08-13 | **Last Amended**: 2026-08-13
