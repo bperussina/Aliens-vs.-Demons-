@@ -45,14 +45,14 @@ gh run list
 gh run view <id>
 ```
 
-Create PRs with `gh pr create` after pushing the branch. Follow the repo's pull-request conventions: summary + test plan, HEREDOC body, no force-push to `main`.
+Feature work goes on a branch, then a PR into `main`. Brody and Dad code in parallel, so push regularly and open the PR when the slice is done unless Brody says to wait. Follow the repo's pull-request conventions: summary + how to try it, HEREDOC body, no force-push to `main`. See `dev-philosophy`.
 
 ## Git safety
 
-- Commit only when the user asks.
+- After a finished slice: commit, `git push -u origin HEAD`, and `gh pr create` unless Brody says to wait.
 - Never `git config`, `--no-verify`, or force-push `main`/`master`.
-- Never skip hooks unless the user explicitly asks.
-- Push with `git push -u origin HEAD` when a branch needs a remote.
+- Never skip hooks unless explicitly asked.
+- Never dump feature work onto `main`.
 
 ## Spec Kit issues
 
@@ -61,13 +61,3 @@ When the user wants tasks on GitHub, use `/speckit-taskstoissues` (see `.cursor/
 - Only create issues in `bperussina/Aliens-vs.-Demons-`.
 - Deduplicate by task id (`T001`, `T002`, …) in existing issue titles.
 - Title format: `T001: <description>`.
-
-## First-time empty repo
-
-This repository started with no commits. After the first commit:
-
-```bash
-git push -u origin main
-```
-
-If `git ls-remote origin` is empty, GitHub has no commits yet — push `main` rather than opening a PR.
