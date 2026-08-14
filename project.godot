@@ -5,8 +5,8 @@ config_version=5
 [application]
 
 config/name="Aliens vs. Demons"
-config/description="You are the robot. Protect the king."
-run/main_scene="res://scenes/main.tscn"
+config/description="Protect the PC. Keep the king alive."
+run/main_scene="res://scenes/main_menu.tscn"
 config/features=PackedStringArray("4.7", "Forward Plus")
 config/icon="res://icon.svg"
 

@@ -1,6 +1,6 @@
 <!--
 Sync Impact Report
-- Version change: (none) → 1.0.0
+- Version change: 1.0.0 → 1.1.0 (Protect the PC; title menu before match; demons deferred)
 - Modified principles: template placeholders → I–V below
 - Added sections: Art Direction, Technology Stack, Development Workflow
 - Removed sections: none (template slots filled)
@@ -41,14 +41,18 @@ tactics.
 **Rationale**: Movement, swarms, and protecting the king all read clearly from
 this angle.
 
-### IV. Protect the King
-The player is the robot. The king is the thing that must be kept alive. If the
-king's health reaches zero, the player loses. Combat, movement, and UI MUST
-make that goal obvious: the king is selectable and movable, demons are threats,
-and health is visible.
+### IV. Protect the PC, Keep the King
+A PC sits in the middle of the match. That machine is what the team is
+defending. The king is the strongest protector of the PC, so the king MUST stay
+alive. The king MUST be selectable and movable by click. If the king's health
+reaches zero, the player loses.
 
-**Rationale**: This is the game. Side systems that hide that fantasy MUST NOT
-ship in the baseline.
+The game MUST open on a title menu (green field, Single Player, Multiplayer,
+Settings). A match MUST NOT start until the player chooses Single Player.
+Demons MUST NOT appear until a later combat slice.
+
+**Rationale**: Brody's picture: log in, pick a mode, then protect the PC with
+the king you can walk around.
 
 ### V. Complete Slices
 A slice MUST be playable, named clearly, on a branch, pushed to GitHub, and
@@ -108,4 +112,4 @@ wording), and go through a pull request.
 All PRs MUST be checked against Principles I–V and the Art Direction and
 Technology Stack sections. Unjustified complexity MUST be rejected.
 
-**Version**: 1.0.0 | **Ratified**: 2026-08-13 | **Last Amended**: 2026-08-13
+**Version**: 1.1.0 | **Ratified**: 2026-08-13 | **Last Amended**: 2026-08-13
