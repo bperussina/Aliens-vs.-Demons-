@@ -1,0 +1,35 @@
+[gd_scene load_steps=7 format=3 uid="uid://b8avdmain0001"]
+
+[ext_resource type="Script" path="res://scripts/match.gd" id="1_match"]
+[ext_resource type="Script" path="res://scripts/arena.gd" id="2_arena"]
+[ext_resource type="Script" path="res://scripts/king.gd" id="3_king"]
+[ext_resource type="Script" path="res://scripts/robot.gd" id="4_robot"]
+[ext_resource type="Script" path="res://scripts/robot_visual.gd" id="5_robot_visual"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_robot"]
+radius = 30.0
+
+[node name="Match" type="Node2D"]
+script = ExtResource("1_match")
+
+[node name="Arena" type="Node2D" parent="."]
+script = ExtResource("2_arena")
+
+[node name="King" type="Node2D" parent="."]
+position = Vector2(0, 40)
+script = ExtResource("3_king")
+
+[node name="Robot" type="CharacterBody2D" parent="."]
+position = Vector2(-180, 40)
+script = ExtResource("4_robot")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Robot"]
+shape = SubResource("CircleShape2D_robot")
+
+[node name="Visual" type="Node2D" parent="Robot"]
+script = ExtResource("5_robot_visual")
+
+[node name="Camera2D" type="Camera2D" parent="Robot"]
+position_smoothing_enabled = true
+position_smoothing_speed = 8.0
+zoom = Vector2(0.92, 0.92)

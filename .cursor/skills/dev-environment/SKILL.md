@@ -24,13 +24,14 @@ If `uv`, `specify`, or `gh` is "not found", fix PATH first. Do not reinstall.
 | `gh` | GitHub CLI | Installed at `~/.local/bin/gh` |
 | `uv` | Python + tool installer | Installed at `~/.local/bin/uv` |
 | `python3.12` | Runtime for specify-cli | Managed by uv; **do not use** system `/usr/bin/python3` (3.9) |
-| `specify` | GitHub Spec Kit CLI | `specify-cli` 0.16.3 via `uv tool install specify-cli` |
+| `godot` | Godot 4.7.1 editor + CLI | `/Applications/Godot.app`; symlink `~/.local/bin/godot` |
 
 Verify:
 
 ```bash
 uv --version
 python3.12 --version
+godot --version
 specify --version
 specify check
 gh --version
@@ -49,6 +50,10 @@ uv python install 3.12
 # Spec Kit CLI
 uv tool install specify-cli
 
+# Godot 4.7.1 (macOS)
+# Download Godot_v4.7.1-stable_macos.universal.zip, move Godot.app to /Applications
+ln -sfn /Applications/Godot.app/Contents/MacOS/Godot ~/.local/bin/godot
+
 # Re-scaffold this repo (only when asked)
 specify init --here --force --integration cursor-agent --script sh
 ```
@@ -58,7 +63,10 @@ specify init --here --force --integration cursor-agent --script sh
 ```
 .specify/                 # Local Spec Kit library (templates, scripts, constitution)
 .cursor/skills/           # Agent skills (speckit-* plus project skills)
-specs/                    # Feature specs (created later)
+specs/                    # Feature specs
+project.godot             # Godot 4.7 2D game (open this folder in Godot)
+scenes/
+scripts/
 .gitignore
 ```
 
