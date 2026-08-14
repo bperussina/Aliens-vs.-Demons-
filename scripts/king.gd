@@ -1,13 +1,11 @@
 extends CharacterBody2D
 
-const SKIN := Color("e8b89a")
-const SKIN_SHADOW := Color("c48b6e")
-const EYE := Color("2a2420")
-const EYE_SHINE := Color("f7f3ee")
-const CLAY := Color("c46a4a")
-const BOX := Color("f4f1ea")
-const BOX_EDGE := Color("d9d2c5")
-const PAPER := Color("f2d56b")
+const CASE := Color("3a3f46")
+const CASE_LIGHT := Color("5b616a")
+const SCREEN := Color("8fd7ff")
+const SCREEN_DARK := Color("1b3a4a")
+const KEY := Color("cfd6de")
+const LOGO := Color("7ec8e8")
 const SELECTED := Color("ffe08a")
 const WALK_SPEED := 180.0
 
@@ -17,6 +15,7 @@ var _target := Vector2.ZERO
 
 
 func _ready() -> void:
+	add_to_group("king")
 	queue_redraw()
 
 
@@ -66,17 +65,16 @@ func _draw() -> void:
 	if selected:
 		var glow := SELECTED
 		glow.a = 0.35
-		draw_circle(Vector2(0, 58), 78.0, glow, true, -1.0, true)
-	var box := Rect2(-48, 8, 96, 100)
-	draw_rect(box, BOX, true, -1.0, true)
-	draw_rect(box, BOX_EDGE, false, 4.0, true)
-	draw_circle(Vector2(0, 58), 16.0, PAPER, true, -1.0, true)
-	draw_circle(Vector2(0, 58), 16.0, Color("c9a227"), false, 2.0, true)
-	draw_circle(Vector2(-6, -28), 44.0, SKIN_SHADOW, true, -1.0, true)
-	draw_circle(Vector2(0, -36), 46.0, SKIN, true, -1.0, true)
-	draw_circle(Vector2(-14, -42), 7.0, EYE, true, -1.0, true)
-	draw_circle(Vector2(12, -40), 7.0, EYE, true, -1.0, true)
-	draw_circle(Vector2(-12, -44), 2.2, EYE_SHINE, true, -1.0, true)
-	draw_circle(Vector2(14, -42), 2.2, EYE_SHINE, true, -1.0, true)
-	draw_circle(Vector2(2, -18), 11.0, CLAY, true, -1.0, true)
-	draw_circle(Vector2(2, -16), 6.0, Color("a35238"), true, -1.0, true)
+		draw_circle(Vector2(20, 20), 110.0, glow, true, -1.0, true)
+	# The king is the computer.
+	draw_rect(Rect2(-70, -10, 48, 96), CASE, true, -1.0, true)
+	draw_rect(Rect2(-70, -10, 48, 96), CASE_LIGHT, false, 3.0, true)
+	draw_circle(Vector2(-46, 70), 5.0, Color("4ad67a"), true, -1.0, true)
+	draw_rect(Rect2(-62, 8, 32, 10), Color("2a2e34"), true, -1.0, true)
+	draw_rect(Rect2(-18, -54, 110, 78), CASE, true, -1.0, true)
+	draw_rect(Rect2(-10, -46, 94, 54), SCREEN_DARK, true, -1.0, true)
+	draw_rect(Rect2(-6, -42, 86, 46), SCREEN, true, -1.0, true)
+	draw_circle(Vector2(37, -19), 10.0, LOGO, true, -1.0, true)
+	draw_rect(Rect2(28, 24, 16, 18), CASE_LIGHT, true, -1.0, true)
+	draw_rect(Rect2(-8, 42, 92, 14), KEY, true, -1.0, true)
+	draw_rect(Rect2(-8, 42, 92, 14), CASE, false, 2.0, true)

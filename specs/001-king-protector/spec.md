@@ -1,144 +1,79 @@
 # Feature Specification: King Protector Arena
 
-**Feature Branch**: `feat/title-menu-and-pc`
+**Feature Branch**: `feat/waves-combat-skills`
 
 **Created**: 2026-08-13
 
 **Status**: Draft
 
-**Input**: User description: "Don't show the king or demons on login. Green background with multiplayer, single player, settings. In the game: a PC in the middle to protect. The king protects the PC the most, so keep the king alive. Click-move the king like before."
+**Input**: Title menu, then Single Player: Level at the top, 10-second combat countdown, King Demon cutscene (chair only). The king IS the computer (no extra PC in the base). Bullets auto-fire out of the wire on the robot's head, in the direction the wire points. Normal demons have four-quarter health; each bullet is half a quarter. Number-key skills. $10 per kill, saved. Wave 50 wins the round.
 
 ## User Scenarios & Testing *(mandatory)*
 
-### User Story 1 - Title menu on launch (Priority: P1)
+### User Story 1 - Title menu first (Priority: P1)
 
-When the game opens, the player is not in a fight. They see a basic green screen with the game name and buttons: Single Player, Multiplayer, Settings. Nothing starts until they pick one.
+Launch is the green menu. No king, no King Demon, no normal demons until Single Player.
 
-**Why this priority**: This is the login/home they asked to see first.
+### User Story 2 - Level, countdown, then cutscene, then a normal demon (Priority: P1)
 
-**Independent Test**: Launch the app and confirm the first frame is the green menu, with no king, no demons, and no arena yet.
-
-**Acceptance Scenarios**:
-
-1. **Given** the app just opened, **When** the player looks at the window, **Then** they see a green background and the title Aliens vs. Demons.
-2. **Given** the title menu, **When** the player looks at the buttons, **Then** Single Player, Multiplayer, and Settings are all visible and clickable.
-3. **Given** the title menu, **When** the player has not pressed Single Player, **Then** no match, king, PC, or demons are shown.
-
----
-
-### User Story 2 - Single Player enters the PC match (Priority: P1)
-
-Single Player loads the match: a PC sits in the middle of the field. The king stands near it. The player is the robot. There are no demons in this slice.
-
-**Why this priority**: This is the game they want after the menu.
-
-**Independent Test**: Click Single Player and find a computer in the center and the cardboard-box king nearby, with no enemies.
+Single Player shows Level at the top (start at Level 1) and "Combat starting in 10 seconds". At zero, a cutscene shows the King Demon in a chair sending normal demons. He does not appear on the field. Then Wave 1 starts and a normal demon spawns.
 
 **Acceptance Scenarios**:
 
-1. **Given** the title menu, **When** the player clicks Single Player, **Then** the match loads with a PC in the middle of the field.
-2. **Given** the match, **When** the player looks around the PC, **Then** the king is there (skin-blob head, clay mouth, white box, yellow paper in the hole).
-3. **Given** the match, **When** the player looks for enemies, **Then** no demons are present.
+1. **Given** Single Player just started, **When** the player looks at the top of the screen, **Then** it shows Level and a 10-second combat countdown.
+2. **Given** the countdown hits zero, **When** the next moment plays, **Then** a cutscene of the King Demon in a chair plays, and he is not walking the arena.
+3. **Given** the cutscene ends, **When** combat begins, **Then** the HUD shows the wave number and a normal demon (person with robot eyes) spawns. The King Demon is still not in the fight.
 
----
+### User Story 3 - Waves, wire-gun, and skills (Priority: P1)
 
-### User Story 3 - Move the king to guard the PC (Priority: P1)
-
-The king is the main protector of the PC. The player click-selects the king, clicks the map to walk him, clicks the king again to deselect. The robot still walks with the keyboard.
-
-**Why this priority**: Same king control as before; now the job is guarding the PC.
-
-**Independent Test**: Select the king, send him around the PC, deselect, click the ground, confirm he stays.
+Normal demons have four quarters of health. Bullets automatically come out of the wire on the robot's head, in the direction that wire is pointing. Each bullet does half of one quarter (eight hits to kill). Number keys 1–8 fire skills. Killing a normal demon grants $10 that is saved.
 
 **Acceptance Scenarios**:
 
-1. **Given** the king is not selected, **When** the player clicks the king, **Then** the king shows a selected look.
-2. **Given** the king is selected, **When** the player clicks a spot on the map, **Then** the king walks there while the robot can still move.
-3. **Given** the king is selected, **When** the player clicks the king again, **Then** he is deslected and map clicks do not move him.
-4. **Given** the king is not selected, **When** the player clicks the map, **Then** the king does not move.
+1. **Given** a normal demon, **When** the robot's head-wire fires, **Then** bullets leave the tip of the wire in the wire's direction and each hit knocks half a quarter off the four-quarter bar (eight hits to kill).
+2. **Given** a dead normal demon, **When** the player checks coins, **Then** they gained $10 and it is still there after leaving and returning.
+3. **Given** combat, **When** the player presses 1–8, **Then** a skill fires (fire, magic, acid, frost, spark, void, gum, quake).
+4. **Given** a wave is cleared, **When** more waves remain, **Then** the next wave number shows and more demons spawn.
 
----
+### User Story 4 - Wave 50 wins the round and levels up (Priority: P1)
 
-### User Story 4 - Multiplayer and Settings from the menu (Priority: P1)
+Clearing wave 50 wins the round and the player gains a level. Multiplayer level-making stays locked until Level 50 and $1000.
 
-Multiplayer and Settings are real menu choices. Settings can be opened and closed. Multiplayer is a real screen that says it is not ready yet and lets the player go back. The player can return to the title menu from a match with Escape.
+### User Story 5 - The king is the computer (Priority: P1)
 
-**Why this priority**: They asked for those buttons on login, not a dead layout.
-
-**Independent Test**: Open Settings and go back. Open Multiplayer and go back. Enter Single Player and press Escape back to the green menu.
-
-**Acceptance Scenarios**:
-
-1. **Given** the title menu, **When** the player clicks Settings, **Then** a settings screen opens, and Back returns to the title menu.
-2. **Given** the title menu, **When** the player clicks Multiplayer, **Then** they see a multiplayer screen they can leave with Back, and a match does not start.
-3. **Given** a Single Player match, **When** the player presses Escape, **Then** they return to the green title menu.
-
----
-
-### User Story 5 - Smooth illustrated look (Priority: P1)
-
-Menu and match look like finished drawing, not pixels and not scribbles.
-
-**Why this priority**: Non-negotiable art rule.
-
-**Independent Test**: Reject the build if the green menu, PC, king, or robot look pixel-blocky or scribbled.
-
-**Acceptance Scenarios**:
-
-1. **Given** the title menu or the match, **When** viewed in motion, **Then** edges stay smooth.
-
----
-
-### Edge Cases
-
-- Clicking the king while he is walking keeps him selected; a new map click replaces the destination.
-- Clicking the king to deselect does not also issue a walk order.
-- A click on the PC while the king is selected counts as a map walk toward that point.
-- Escape from Settings or Multiplayer returns to the title menu, not into a match.
-- Demons, king health-loss, and waves are out of this slice.
+There is no extra computer sitting in the base. The king is the computer. Click-move the king. Demons hunt the king. Esc returns to the menu.
 
 ## Requirements *(mandatory)*
 
-### Functional Requirements
+- **FR-001**: Launch MUST be the green title menu.
+- **FR-002**: Match HUD MUST show Level and then a 10-second combat countdown at the top.
+- **FR-003**: After countdown, a King Demon chair cutscene MUST play. The King Demon MUST NOT spawn as a fighter in this slice.
+- **FR-004**: After the cutscene, Wave 1 MUST start and spawn a normal demon.
+- **FR-005**: HUD MUST show the current wave after the countdown.
+- **FR-006**: Normal demons MUST have four visible health quarters. A wire-bullet MUST deal half of one quarter (8 hits to kill).
+- **FR-007**: Bullets MUST spawn at the robot head-wire tip and travel the way the wire points. There MUST NOT be a separate PC turret.
+- **FR-013**: Click-move the king computer, robot WASD aims the wire, no extra PC in the base, no pixel art.
+- **FR-008**: Keys 1–8 MUST cast fire, magic, acid, frost, spark, void, gum, and quake skills.
+- **FR-009**: Killing a normal demon MUST add $10 to saved coins.
+- **FR-010**: Clearing a wave MUST start the next wave until wave 50.
+- **FR-011**: Clearing wave 50 MUST win the round and increase Level by 1.
+- **FR-012**: Multiplayer level-making MUST stay locked until Level 50 and $1000.
 
-- **FR-001**: Launch MUST show the title menu, not a match.
-- **FR-002**: Title menu MUST use a green background and offer Single Player, Multiplayer, and Settings.
-- **FR-003**: Single Player MUST load a match with a PC in the middle of the field.
-- **FR-004**: The king MUST appear in the match with the specified look and MUST be the main protector of the PC.
-- **FR-005**: Clicking the unselected king MUST select him. Clicking the selected king MUST deselect him.
-- **FR-006**: While the king is selected, clicking the map MUST send him walking there. The robot MUST remain controllable.
-- **FR-007**: While the king is not selected, map clicks MUST NOT move the king.
-- **FR-008**: This slice MUST NOT spawn demons.
-- **FR-009**: The player MUST control the robot with movement input during a match. The camera MUST follow the robot (Vampire Survivors-style).
-- **FR-010**: Multiplayer MUST be a reachable menu screen that does not start a match.
-- **FR-011**: Settings MUST be a reachable screen with a way back to the title menu.
-- **FR-012**: Escape during a match MUST return to the title menu.
-- **FR-013**: Visuals MUST be smooth illustration. Pixel-art and scribble looks are forbidden.
+## Key Entities
 
-### Key Entities
+- **King** (the computer you protect), **Robot** (wire-gun), **Normal Demon**, **King Demon** (cutscene only), **Wave**, **Coins**, **Level**
 
-- **Title Menu**: First screen. Green. Mode buttons.
-- **PC**: Computer in the center of the match. The thing being protected.
-- **King**: Main protector of the PC. Click-to-move. Specified look.
-- **Robot**: Player body. Direct move. Camera target.
-- **Arena**: Field around the PC.
-- **Match**: Single Player session. No demons in this slice.
+## Success Criteria
 
-## Success Criteria *(mandatory)*
-
-### Measurable Outcomes
-
-- **SC-001**: A new player sees the green title menu on first launch, before any match, every time.
-- **SC-002**: From the menu, Single Player puts a PC in the middle of the field within 3 seconds.
-- **SC-003**: A new player can select the king, walk him, and deselect on the first try.
-- **SC-004**: Multiplayer and Settings are each reachable in one click from the title menu and can return in one click.
-- **SC-005**: Reviewers reject the build if it looks pixelated or scribbled, or if demons appear in this slice.
+- **SC-001**: First match view is Level + 10-second countdown, never an instant demon.
+- **SC-002**: King Demon is only in the chair cutscene.
+- **SC-003**: First spawn after the cutscene is a normal demon on Wave 1.
+- **SC-004**: Eight wire-gun hits kill a normal demon; coins go up $10 and persist.
+- **SC-005**: Wave 50 clear levels the player up.
 
 ## Assumptions
 
-- "Log in" means the title/home screen, not an account system.
-- Multiplayer is a menu entry now; live online play comes later.
-- Settings can be simple (back, plus at least one real control such as fullscreen).
-- Robot WASD/arrows still apply in the match.
-- Demons, health-loss defeat, and waves stay specified for later slices, not this one.
-- No pixel art.
+- Wave N spawns `min(N, 10)` normal demons.
+- Skills target nearby demons and have cooldowns.
+- Save file stores coins and level on disk.
+- Live online multiplayer is still later; unlock only reveals that tools are coming.

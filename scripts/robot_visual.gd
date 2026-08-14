@@ -16,5 +16,5 @@ func _draw() -> void:
 	draw_circle(Vector2(0, -10), 22.0, METAL, true, -1.0, true)
 	draw_rect(Rect2(-16, -18, 32, 14), VISOR, true, -1.0, true)
 	draw_circle(Vector2(0, -34), 6.0, ACCENT, true, -1.0, true)
-	draw_line(Vector2(0, -34), Vector2(0, -48), ACCENT, 3.0, true)
-	draw_circle(Vector2(0, -50), 4.0, Color("f0c14a"), true, -1.0, true)
+	draw_line(Vector2(0, -34), Vector2(0, -56), Color("f0c14a"), 4.0, true)
+	draw_circle(Vector2(0, -56), 5.0, Color("ffe08a"), true, -1.0, true)
