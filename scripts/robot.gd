@@ -5,6 +5,10 @@ const SPEED := 280.0
 @onready var _visual: Node2D = $Visual
 
 
+func _ready() -> void:
+	add_to_group("robot")
+
+
 func _physics_process(_delta: float) -> void:
 	var direction := _move_direction()
 	velocity = direction * SPEED

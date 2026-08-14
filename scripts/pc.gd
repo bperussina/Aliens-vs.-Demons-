@@ -9,6 +9,7 @@ const LOGO := Color("7ec8e8")
 
 
 func _ready() -> void:
+	add_to_group("pc")
 	queue_redraw()
 
 
