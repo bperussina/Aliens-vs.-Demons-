@@ -34,4 +34,8 @@ godot --headless --path . --quit
 
 ## After script/scene edits
 
-Let Godot import once (`godot --headless --path . --quit` or open the editor) before assuming UIDs/import files are final.
+Let Godot import once (`godot --headless --path . --import` or open the editor) before assuming UIDs/import files are final.
+
+## Skill packs
+
+This repo vendors 150+ Godot 4 skills (GD Agentic Skills + GodotPrompter). Start at `godot-skills-index`. Never let a 3D/C#/pixel skill override this 2D GDScript project.

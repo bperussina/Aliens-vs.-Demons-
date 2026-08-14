@@ -21,7 +21,7 @@ godot --path . --editor
 ## Tooling
 
 - [GitHub Spec Kit](https://github.com/github/spec-kit) (`specify-cli` 0.16.3) — local library in `.specify/`
-- Cursor skills in `.cursor/skills/` (`speckit-*` plus project workflow/environment/GitHub skills)
+- Cursor skills in `.cursor/skills/` (Spec Kit, this game, plus vendored Godot 4 packs)
 - GitHub remote: [bperussina/Aliens-vs.-Demons-](https://github.com/bperussina/Aliens-vs.-Demons-)
 
 ## Prerequisites
