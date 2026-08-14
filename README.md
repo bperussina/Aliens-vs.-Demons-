@@ -1,6 +1,11 @@
 # Aliens vs. Demons
 
+You are the robot. Protect the king. Demons look like people with robot eyes. The camera plays like Vampire Survivors. The look is smooth illustration, never pixel art.
+
 A spec-driven game. Specifications in this repo are the source of truth; code follows them.
+
+**Stack:** Godot 4 (2D) + GDScript. See `.specify/memory/constitution.md`.
+**Baseline spec:** `specs/001-king-protector/spec.md`.
 
 ## Tooling
 
