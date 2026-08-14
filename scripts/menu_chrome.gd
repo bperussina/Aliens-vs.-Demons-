@@ -1,17 +1,37 @@
 class_name MenuChrome
 extends RefCounted
 
-const GREEN := Color("4f8f45")
 const PANEL := Color("2f6b32")
 const PANEL_HOVER := Color("3d8540")
 const TEXT := Color("f4f7ef")
 const TITLE := Color("f7fff0")
+const TITLE_ART := preload("res://assets/textures/title_bg.png")
 
 
 static func paint_background(rect: ColorRect) -> void:
-	rect.color = GREEN
+	_ensure_art(rect)
+	rect.color = Color(0.05, 0.12, 0.05, 0.58)
 	rect.set_anchors_preset(Control.PRESET_FULL_RECT)
 	rect.mouse_filter = Control.MOUSE_FILTER_IGNORE
+
+
+static func _ensure_art(rect: ColorRect) -> void:
+	var parent := rect.get_parent()
+	if parent == null or parent.get_node_or_null("TitleArt") != null:
+		return
+	var art := TextureRect.new()
+	art.name = "TitleArt"
+	art.texture = TITLE_ART
+	art.set_anchors_preset(Control.PRESET_FULL_RECT)
+	art.offset_left = 0
+	art.offset_top = 0
+	art.offset_right = 0
+	art.offset_bottom = 0
+	art.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	art.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
+	art.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	parent.add_child(art)
+	parent.move_child(art, mini(rect.get_index(), parent.get_child_count() - 1))
 
 
 static func style_button(button: Button) -> void:

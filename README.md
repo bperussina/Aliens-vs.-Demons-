@@ -12,7 +12,7 @@ A spec-driven game. Specifications in this repo are the source of truth; code fo
 1. Open **Godot 4.7.1** (`/Applications/Godot.app`).
 2. Import this repo folder.
 3. Press **Play** (F5). You should see a **green title menu**.
-4. **Single Player** loads the match. The king **is** the computer. Walk with WASD to aim the head-wire. You start with **2 turrets** — click the map to place them. **Shop** (next to the money) sells more for **$10**. **Esc** returns to the menu.
+4. **Single Player** loads the match. Illustrated robot, king-computer, demons, and turrets. Walk with WASD to aim the head-wire. You start with **2 turrets** — click the map to place them. **Shop** (next to the money) sells more for **$10**. **Esc** returns to the menu.
 
 ```bash
 export PATH="$HOME/.local/bin:$PATH"

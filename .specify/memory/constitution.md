@@ -1,6 +1,6 @@
 <!--
 Sync Impact Report
-- Version change: 1.2.0 → 1.3.0 (Place two turrets, then buy more from Shop for $10)
+- Version change: 1.3.0 → 1.4.0 (Painted sprites for robot, king, demons, turrets, field, and title)
 - Modified principles: template placeholders → I–V below
 - Added sections: Art Direction, Technology Stack, Development Workflow
 - Removed sections: none (template slots filled)
@@ -67,13 +67,16 @@ cannot be reviewed.
 
 ## Art Direction
 
-The king IS the computer: a finished illustrated desktop (monitor, tower, keys),
-not a second machine sitting next to a person.
+The king IS the computer: a finished illustrated royal desktop (monitor, tower,
+keys, crown), not a second machine sitting next to a person.
 
 Demons MUST read as people who have had robot eyes installed.
 
 The robot is the player hero and MUST look like a finished illustrated robot,
 not a stick figure or pixel sprite.
+
+Match and menu art MUST use the painted sprites and textures in `assets/`.
+Placeholder `_draw` geometry MUST NOT be the on-screen character.
 
 Health bars sit above combatants so remaining health is readable at a glance
 during a swarm.
@@ -113,4 +116,4 @@ wording), and go through a pull request.
 All PRs MUST be checked against Principles I–V and the Art Direction and
 Technology Stack sections. Unjustified complexity MUST be rejected.
 
-**Version**: 1.3.0 | **Ratified**: 2026-08-13 | **Last Amended**: 2026-08-13
+**Version**: 1.4.0 | **Ratified**: 2026-08-13 | **Last Amended**: 2026-08-13

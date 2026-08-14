@@ -1,17 +1,13 @@
 extends Node2D
 
+const TEX := preload("res://assets/sprites/turret.png")
+const HEIGHT := 96.0
 const FIRE_EVERY := 0.5
 const BULLET_SPEED := 520.0
 const RANGE := 520.0
 const BULLET_SCENE := preload("res://scenes/bullet.tscn")
-
-const BASE := Color("4a5564")
-const BASE_RIM := Color("6d7c8e")
-const PAD := Color("2f3640")
-const BARREL := Color("c5d2e0")
-const TIP := Color("ffe08a")
-const GHOST_OK := Color(1, 1, 1, 0.55)
-const GHOST_BAD := Color(1, 0.35, 0.3, 0.45)
+const GHOST_OK := Color(1, 1, 1, 0.62)
+const GHOST_BAD := Color(1, 0.38, 0.32, 0.5)
 
 var preview := false
 var preview_ok := true
@@ -25,12 +21,14 @@ var _target: Node2D = null
 func _ready() -> void:
 	if not preview:
 		add_to_group("turrets")
+	GameArt.attach(self, TEX, HEIGHT, Vector2.ZERO)
 	queue_redraw()
 
 
 func _process(delta: float) -> void:
 	if preview:
 		modulate = GHOST_OK if preview_ok else GHOST_BAD
+		rotation = 0.0
 		queue_redraw()
 		return
 	_cool = maxf(0.0, _cool - delta)
@@ -40,7 +38,7 @@ func _process(delta: float) -> void:
 		_acquire = 6
 	if _target != null and is_instance_valid(_target):
 		_barrel = (_target.global_position - global_position).angle()
-		queue_redraw()
+		rotation = _barrel + PI * 0.5
 		if _cool <= 0.0:
 			_cool = FIRE_EVERY
 			_fire()
@@ -51,7 +49,7 @@ func _process(delta: float) -> void:
 func _fire() -> void:
 	var heading := Vector2.from_angle(_barrel)
 	var bullet: Area2D = BULLET_SCENE.instantiate()
-	bullet.global_position = global_position + heading * 34.0
+	bullet.global_position = global_position + heading * 42.0
 	bullet.velocity = heading * BULLET_SPEED
 	bullet.damage = 1
 	bullet.tint = Color("ffd36a")
@@ -73,13 +71,10 @@ func _nearest_demon() -> Node2D:
 
 
 func _draw() -> void:
-	draw_circle(Vector2.ZERO, 28.0, PAD, true, -1.0, true)
-	draw_circle(Vector2.ZERO, 22.0, BASE, true, -1.0, true)
-	draw_circle(Vector2.ZERO, 22.0, BASE_RIM, false, 3.0, true)
-	draw_circle(Vector2.ZERO, 8.0, Color("1c222a"), true, -1.0, true)
-	var nose := Vector2.from_angle(_barrel)
-	draw_line(nose * 8.0, nose * 36.0, BARREL, 10.0, true)
-	draw_circle(nose * 36.0, 6.0, TIP, true, -1.0, true)
+	var shadow := Color(0.05, 0.07, 0.04, 0.34)
+	draw_set_transform(Vector2(0, 28), 0.0, Vector2(1.2, 0.4))
+	draw_circle(Vector2.ZERO, 26.0, shadow, true, -1.0, true)
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	if preview:
 		var ring := Color("ffe08a")
 		ring.a = 0.22 if preview_ok else 0.12

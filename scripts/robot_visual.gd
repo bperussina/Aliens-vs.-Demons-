@@ -1,20 +1,24 @@
 extends Node2D
 
-const METAL := Color("8aa0b8")
-const METAL_DARK := Color("4d5d70")
-const VISOR := Color("7ec8e8")
-const ACCENT := Color("d4e8f5")
+const TEX := preload("res://assets/sprites/robot.png")
+const HEIGHT := 124.0
+const OFFSET := Vector2(0, 10)
 
 
 func _ready() -> void:
+	GameArt.attach(self, TEX, HEIGHT, OFFSET)
+	var muzzle := Marker2D.new()
+	muzzle.name = "Muzzle"
+	muzzle.position = GameArt.muzzle_offset(HEIGHT, OFFSET)
+	add_child(muzzle)
+	var base := Marker2D.new()
+	base.name = "WireBase"
+	base.position = OFFSET + Vector2(0.0, -HEIGHT * 0.22)
+	add_child(base)
 	queue_redraw()
 
 
 func _draw() -> void:
-	draw_circle(Vector2(0, 18), 26.0, METAL_DARK, true, -1.0, true)
-	draw_circle(Vector2(0, 4), 30.0, METAL, true, -1.0, true)
-	draw_circle(Vector2(0, -10), 22.0, METAL, true, -1.0, true)
-	draw_rect(Rect2(-16, -18, 32, 14), VISOR, true, -1.0, true)
-	draw_circle(Vector2(0, -34), 6.0, ACCENT, true, -1.0, true)
-	draw_line(Vector2(0, -34), Vector2(0, -56), Color("f0c14a"), 4.0, true)
-	draw_circle(Vector2(0, -56), 5.0, Color("ffe08a"), true, -1.0, true)
+	var shadow := Color(0.05, 0.07, 0.04, 0.35)
+	draw_set_transform(Vector2(0, 42), 0.0, Vector2(1.35, 0.42))
+	draw_circle(Vector2.ZERO, 28.0, shadow, true, -1.0, true)

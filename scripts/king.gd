@@ -1,11 +1,8 @@
 extends CharacterBody2D
 
-const CASE := Color("3a3f46")
-const CASE_LIGHT := Color("5b616a")
-const SCREEN := Color("8fd7ff")
-const SCREEN_DARK := Color("1b3a4a")
-const KEY := Color("cfd6de")
-const LOGO := Color("7ec8e8")
+const TEX := preload("res://assets/sprites/king.png")
+const HEIGHT := 168.0
+const OFFSET := Vector2(0, 8)
 const SELECTED := Color("ffe08a")
 const WALK_SPEED := 180.0
 
@@ -16,6 +13,7 @@ var _target := Vector2.ZERO
 
 func _ready() -> void:
 	add_to_group("king")
+	GameArt.attach(self, TEX, HEIGHT, OFFSET)
 	queue_redraw()
 
 
@@ -62,19 +60,11 @@ func _on_click_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: 
 
 
 func _draw() -> void:
+	var shadow := Color(0.05, 0.07, 0.04, 0.38)
+	draw_set_transform(Vector2(0, 62), 0.0, Vector2(1.7, 0.45))
+	draw_circle(Vector2.ZERO, 48.0, shadow, true, -1.0, true)
+	draw_set_transform(Vector2.ZERO, 0.0, Vector2.ONE)
 	if selected:
 		var glow := SELECTED
-		glow.a = 0.35
-		draw_circle(Vector2(20, 20), 110.0, glow, true, -1.0, true)
-	# The king is the computer.
-	draw_rect(Rect2(-70, -10, 48, 96), CASE, true, -1.0, true)
-	draw_rect(Rect2(-70, -10, 48, 96), CASE_LIGHT, false, 3.0, true)
-	draw_circle(Vector2(-46, 70), 5.0, Color("4ad67a"), true, -1.0, true)
-	draw_rect(Rect2(-62, 8, 32, 10), Color("2a2e34"), true, -1.0, true)
-	draw_rect(Rect2(-18, -54, 110, 78), CASE, true, -1.0, true)
-	draw_rect(Rect2(-10, -46, 94, 54), SCREEN_DARK, true, -1.0, true)
-	draw_rect(Rect2(-6, -42, 86, 46), SCREEN, true, -1.0, true)
-	draw_circle(Vector2(37, -19), 10.0, LOGO, true, -1.0, true)
-	draw_rect(Rect2(28, 24, 16, 18), CASE_LIGHT, true, -1.0, true)
-	draw_rect(Rect2(-8, 42, 92, 14), KEY, true, -1.0, true)
-	draw_rect(Rect2(-8, 42, 92, 14), CASE, false, 2.0, true)
+		glow.a = 0.32
+		draw_circle(Vector2(0, 20), 118.0, glow, true, -1.0, true)

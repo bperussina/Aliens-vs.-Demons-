@@ -14,7 +14,7 @@ func _draw() -> void:
 	var filled := ceili(float(hits) / 2.0)
 	var width := 48.0
 	var height := 8.0
-	var origin := Vector2(-width * 0.5, -58.0)
+	var origin := Vector2(-width * 0.5, -72.0)
 	draw_rect(Rect2(origin, Vector2(width, height)), EMPTY, true, -1.0, true)
 	var slice := width / float(quarters)
 	for i in quarters:
