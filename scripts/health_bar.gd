@@ -4,17 +4,23 @@ const FILL := Color("e24b4b")
 const EMPTY := Color("2a2420")
 const EDGE := Color("f4f1ea")
 
+@export var width := 56.0
+@export var height := 9.0
+
+
+func _process(_delta: float) -> void:
+	queue_redraw()
+
 
 func _draw() -> void:
-	var demon := get_parent()
-	if demon == null or not ("hits_left" in demon):
+	var host := get_parent()
+	if host == null or not ("hits_left" in host) or not ("max_hits" in host):
 		return
-	var hits: int = demon.hits_left
+	var hits: int = host.hits_left
+	var max_hits: int = maxi(1, int(host.max_hits))
 	var quarters := 4
-	var filled := ceili(float(hits) / 2.0)
-	var width := 48.0
-	var height := 8.0
-	var origin := Vector2(-width * 0.5, -72.0)
+	var filled := clampi(ceili(float(hits) / float(max_hits) * float(quarters)), 0, quarters)
+	var origin := Vector2(-width * 0.5, 0.0)
 	draw_rect(Rect2(origin, Vector2(width, height)), EMPTY, true, -1.0, true)
 	var slice := width / float(quarters)
 	for i in quarters:

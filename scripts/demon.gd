@@ -5,25 +5,25 @@ signal died
 const TEX := preload("res://assets/sprites/demon.png")
 const HEIGHT := 112.0
 const OFFSET := Vector2(0, 6)
-const MAX_HITS := 8
 const SPEED := 70.0
+const KING_REACH := 82.0
+const ROBOT_REACH := 40.0
+const BITE_EVERY := 0.55
 
-var hits_left: int = MAX_HITS
+var max_hits: int = 8
+var hits_left: int = 8
 var _slow_until_ms: int = 0
-
-@onready var _bar: Node2D = $HealthBar
+var _bite_cool: float = 0.0
 
 
 func _ready() -> void:
 	add_to_group("demons")
 	GameArt.attach(self, TEX, HEIGHT, OFFSET)
 	queue_redraw()
-	_bar.queue_redraw()
 
 
 func hit(amount: int = 1) -> void:
 	hits_left = maxi(0, hits_left - amount)
-	_bar.queue_redraw()
 	if hits_left <= 0:
 		died.emit()
 		SaveData.add_coins(SaveData.COINS_PER_DEMON)
@@ -34,20 +34,30 @@ func apply_slow(seconds: float) -> void:
 	_slow_until_ms = Time.get_ticks_msec() + int(seconds * 1000.0)
 
 
-func _physics_process(_delta: float) -> void:
+func _physics_process(delta: float) -> void:
+	_bite_cool = maxf(0.0, _bite_cool - delta)
 	var king := get_tree().get_first_node_in_group("king") as Node2D
+	var robot := get_tree().get_first_node_in_group("robot") as Node2D
 	if king == null:
 		return
 	var to_king := king.global_position - global_position
-	if to_king.length() < 70.0:
-		velocity = Vector2.ZERO
-		move_and_slide()
-		return
 	var speed := SPEED
 	if Time.get_ticks_msec() < _slow_until_ms:
 		speed *= 0.4
-	velocity = to_king.normalized() * speed
+	if to_king.length() <= KING_REACH:
+		velocity = Vector2.ZERO
+	else:
+		velocity = to_king.normalized() * speed
 	move_and_slide()
+	if _bite_cool > 0.0:
+		return
+	if to_king.length() <= KING_REACH and king.has_method("hit"):
+		_bite_cool = BITE_EVERY
+		king.hit(1)
+		return
+	if robot and robot.has_method("hit") and global_position.distance_to(robot.global_position) <= ROBOT_REACH:
+		_bite_cool = BITE_EVERY
+		robot.hit(1)
 
 
 func _draw() -> void:

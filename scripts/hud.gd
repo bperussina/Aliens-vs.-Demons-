@@ -8,6 +8,8 @@ var shop_open := false
 @onready var _top: HBoxContainer = $Top
 @onready var _skills: Label = $Bottom/Skills
 @onready var _turrets: Label = $Bottom/Turrets
+@onready var _you: Label = $Vitals/You
+@onready var _computer: Label = $Vitals/Computer
 @onready var _cutscene: Control = $Cutscene
 @onready var _cutscene_line: Label = $Cutscene/Column/Line
 @onready var _skill_node: Node = $"../Skills"
@@ -25,6 +27,7 @@ func _ready() -> void:
 func _process(_delta: float) -> void:
 	_coins.text = "$%d" % SaveData.coins
 	_turrets.text = "Turrets: %d" % SaveData.turrets
+	_refresh_vitals()
 	if _skill_node and _skill_node.has_method("labels"):
 		_skills.text = "  ".join(_skill_node.labels())
 	if _buy_button:
@@ -43,6 +46,21 @@ func set_level(level: int) -> void:
 
 func set_status(text: String) -> void:
 	_status.text = text
+
+
+func _refresh_vitals() -> void:
+	var robot := get_tree().get_first_node_in_group("robot")
+	var king := get_tree().get_first_node_in_group("king")
+	if _you and robot and "hits_left" in robot and "max_hits" in robot:
+		_you.text = "You  %s" % _pips(int(robot.hits_left), int(robot.max_hits))
+	if _computer and king and "hits_left" in king and "max_hits" in king:
+		_computer.text = "Computer  %s" % _pips(int(king.hits_left), int(king.max_hits))
+
+
+func _pips(hits: int, max_hits: int) -> String:
+	var quarters := 4
+	var filled := clampi(ceili(float(hits) / float(maxi(max_hits, 1)) * float(quarters)), 0, quarters)
+	return "[" + "#".repeat(filled) + "-".repeat(quarters - filled) + "]"
 
 
 func show_cutscene(on: bool) -> void:

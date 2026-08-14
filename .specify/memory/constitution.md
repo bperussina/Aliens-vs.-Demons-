@@ -1,6 +1,6 @@
 <!--
 Sync Impact Report
-- Version change: 1.3.0 → 1.4.0 (Painted sprites for robot, king, demons, turrets, field, and title)
+- Version change: 1.4.0 → 1.5.0 (You and the computer have health; 10 turns per match)
 - Modified principles: template placeholders → I–V below
 - Added sections: Art Direction, Technology Stack, Development Workflow
 - Removed sections: none (template slots filled)
@@ -44,6 +44,8 @@ this angle.
 ### IV. Protect the King Computer
 The king IS the computer. There is no extra machine sitting in the base.
 The king MUST stay alive and MUST be click-moved. Demons hunt the king.
+The robot and the king computer MUST have health. If either reaches zero, the
+player loses. A match is 10 turns at a time.
 
 Bullets MUST come out of the wire on the robot's head, in the direction that
 wire is pointing. No extra computer sitting in the base.
@@ -116,4 +118,4 @@ wording), and go through a pull request.
 All PRs MUST be checked against Principles I–V and the Art Direction and
 Technology Stack sections. Unjustified complexity MUST be rejected.
 
-**Version**: 1.4.0 | **Ratified**: 2026-08-13 | **Last Amended**: 2026-08-13
+**Version**: 1.5.0 | **Ratified**: 2026-08-13 | **Last Amended**: 2026-08-13
