@@ -17,6 +17,7 @@ var shop_open := false
 var _shop_button: Button
 var _shop_panel: PanelContainer
 var _buy_button: Button
+var _pack_button: Button
 var _shop_hint: Label
 
 
@@ -26,18 +27,23 @@ func _ready() -> void:
 
 func _process(_delta: float) -> void:
 	_coins.text = "$%d" % SaveData.coins
-	_turrets.text = "Turrets: %d" % SaveData.turrets
+	var on_map := get_tree().get_nodes_in_group("turrets").size()
+	_turrets.text = "Turrets: %d   Map: %d/%d" % [SaveData.turrets, on_map, SaveData.MAX_PLACED]
 	_refresh_vitals()
 	if _skill_node and _skill_node.has_method("labels"):
 		_skills.text = "  ".join(_skill_node.labels())
 	if _buy_button:
-		_buy_button.disabled = SaveData.coins < SaveData.TURRET_PRICE
+		_buy_button.disabled = not SaveData.can_buy_turret()
 		_buy_button.text = "Buy  $%d" % SaveData.TURRET_PRICE
-	if _shop_hint:
-		if SaveData.coins < SaveData.TURRET_PRICE:
-			_shop_hint.text = "Need $%d to buy a turret." % SaveData.TURRET_PRICE
+	if _pack_button:
+		if SaveData.unlimited_turrets:
+			_pack_button.text = "Unlimited stock  owned"
+			_pack_button.disabled = true
 		else:
-			_shop_hint.text = "Click the map to place a turret."
+			_pack_button.text = "Unlimited stock  $%d" % SaveData.UNLIMITED_PRICE
+			_pack_button.disabled = SaveData.coins < SaveData.UNLIMITED_PRICE
+	if _shop_hint:
+		_shop_hint.text = _hint_text(on_map)
 
 
 func set_level(level: int) -> void:
@@ -84,9 +90,28 @@ func _toggle_shop() -> void:
 
 func _buy_turret() -> void:
 	if SaveData.try_buy_turret():
-		_shop_hint.text = "Turret ready. Click the map to place it."
+		_shop_hint.text = "Turret ready. Only %d can be on the map at a time." % SaveData.MAX_PLACED
+	elif not SaveData.unlimited_turrets and SaveData.turrets >= SaveData.MAX_STOCK:
+		_shop_hint.text = "Max %d in stock. Spend $%d for unlimited stock." % [SaveData.MAX_STOCK, SaveData.UNLIMITED_PRICE]
 	else:
 		_shop_hint.text = "Need $%d to buy a turret." % SaveData.TURRET_PRICE
+
+
+func _buy_unlimited() -> void:
+	if SaveData.try_buy_unlimited():
+		_shop_hint.text = "Unlimited stock unlocked. Still only %d turrets on the map at a time." % SaveData.MAX_PLACED
+	else:
+		_shop_hint.text = "Need $%d for unlimited stock." % SaveData.UNLIMITED_PRICE
+
+
+func _hint_text(on_map: int) -> String:
+	if on_map >= SaveData.MAX_PLACED:
+		return "Only %d turrets on the map at a time." % SaveData.MAX_PLACED
+	if not SaveData.unlimited_turrets and SaveData.turrets >= SaveData.MAX_STOCK:
+		return "Max %d in stock. Spend $%d to buy as many as you want." % [SaveData.MAX_STOCK, SaveData.UNLIMITED_PRICE]
+	if SaveData.turrets <= 0:
+		return "Buy a turret, then click the map to place it."
+	return "Click the map to place a turret. Max %d on the map." % SaveData.MAX_PLACED
 
 
 func _build_shop() -> void:
@@ -101,10 +126,10 @@ func _build_shop() -> void:
 	_shop_panel = PanelContainer.new()
 	_shop_panel.visible = false
 	_shop_panel.set_anchors_preset(Control.PRESET_TOP_RIGHT)
-	_shop_panel.offset_left = -420.0
+	_shop_panel.offset_left = -440.0
 	_shop_panel.offset_top = 84.0
 	_shop_panel.offset_right = -24.0
-	_shop_panel.offset_bottom = 280.0
+	_shop_panel.offset_bottom = 430.0
 	_shop_panel.mouse_filter = Control.MOUSE_FILTER_STOP
 	var panel_box := StyleBoxFlat.new()
 	panel_box.bg_color = Color("1e2a22")
@@ -165,6 +190,13 @@ func _build_shop() -> void:
 	_style_hud_button(_buy_button)
 	_buy_button.pressed.connect(_buy_turret)
 	column.add_child(_buy_button)
+
+	_pack_button = Button.new()
+	_pack_button.focus_mode = Control.FOCUS_NONE
+	_pack_button.custom_minimum_size = Vector2(0, 44)
+	_style_hud_button(_pack_button)
+	_pack_button.pressed.connect(_buy_unlimited)
+	column.add_child(_pack_button)
 
 	_shop_hint = Label.new()
 	_shop_hint.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART

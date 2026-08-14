@@ -1,6 +1,6 @@
 # Feature Specification: King Protector Arena
 
-**Feature Branch**: `feat/health-and-turns`
+**Feature Branch**: `feat/turret-cap`
 
 **Created**: 2026-08-13
 
@@ -43,16 +43,16 @@ A match is 10 turns. The HUD shows Turn N / 10. Clearing turn 10 wins the round 
 
 There is no extra computer sitting in the base. The king is the computer. Click-move the king. Demons hunt the king. Esc returns to the menu.
 
-### User Story 6 - Place two turrets, then buy more (Priority: P1)
+### User Story 6 - Five turrets on the map, $2 for unlimited stock (Priority: P1)
 
-The player starts with two turrets. Click the map once to plant the first, click another place to plant the second. After that, clicking the map does not place a turret. Top-right, next to the money, a Shop button opens a shop. A turret costs $10. Next to the skills, the HUD shows how many unplaced turrets are left.
+The player starts with two turrets. At most five turrets may stand on the map at once. Shop sells extra turrets for $10. Without the $2 pack, stock caps at five. Spending $2 unlocks unlimited stock; the map cap stays five. Next to the skills, the HUD shows stock and how many are on the map.
 
 **Acceptance Scenarios**:
 
-1. **Given** a fresh match, **When** the player looks next to the skills, **Then** it shows 2 turrets.
-2. **Given** 2 unplaced turrets, **When** the player clicks two different map spots (king not selected), **Then** two turrets stand there and the count is 0.
-3. **Given** 0 unplaced turrets, **When** the player clicks the map, **Then** no new turret appears.
-4. **Given** at least $10, **When** the player clicks Shop then buys a turret, **Then** coins drop by $10 and the turret count goes up by 1 so they can click the map to place it.
+1. **Given** a fresh match, **When** the player looks next to the skills, **Then** it shows 2 turrets and Map 0/5.
+2. **Given** 5 turrets already on the map and leftover stock, **When** the player clicks the map, **Then** no sixth turret appears.
+3. **Given** 5 turrets in stock and no $2 pack, **When** the player tries to buy another, **Then** the buy does not go through.
+4. **Given** at least $2 and no pack yet, **When** the player buys Unlimited stock, **Then** they can keep buying turrets for $10 each, still with only 5 on the map.
 
 ### User Story 7 - You have health, the computer has health (Priority: P1)
 
@@ -80,10 +80,12 @@ The robot and the king computer each have a four-quarter health bar. Demons that
 - **FR-010**: Clearing a turn MUST start the next turn until turn 10.
 - **FR-011**: Clearing turn 10 MUST win the round and increase Level by 1.
 - **FR-012**: Multiplayer level-making MUST stay locked until Level 50 and $1000.
-- **FR-014**: The player MUST start with 2 unplaced turrets. A map click MUST place one when stock remains and the king is not selected.
-- **FR-015**: Map clicks MUST NOT place a turret when stock is 0.
+- **FR-014**: The player MUST start with 2 unplaced turrets. A map click MUST place one when stock remains, fewer than 5 are on the map, and the king is not selected.
+- **FR-015**: Map clicks MUST NOT place a turret when stock is 0 or 5 turrets are already on the map.
 - **FR-016**: A Shop button MUST sit next to the money. Buying a turret MUST cost $10 and add 1 to unplaced stock.
-- **FR-017**: Unplaced turret count MUST appear next to the skills.
+- **FR-017**: Unplaced turret count and map count (N/5) MUST appear next to the skills.
+- **FR-020**: Without the $2 pack, unplaced stock MUST NOT exceed 5.
+- **FR-021**: Spending $2 MUST unlock unlimited turret stock. The on-map cap MUST stay 5.
 - **FR-018**: The robot and the king computer MUST each have visible health. Demons MUST damage the computer in melee and the robot on contact.
 - **FR-019**: The match MUST end in a loss if You health or Computer health reaches zero.
 
@@ -98,7 +100,8 @@ The robot and the king computer each have a four-quarter health bar. Demons that
 - **SC-003**: First spawn after the cutscene is a normal demon on Wave 1.
 - **SC-004**: Eight wire-gun hits kill a normal demon; coins go up $10 and persist.
 - **SC-005**: Clearing turn 10 with You and Computer still alive levels the player up.
-- **SC-006**: Two map clicks plant the starting turrets; a third map click plants nothing until a $10 shop buy.
+- **SC-006**: A sixth map click does not plant a turret while 5 are already on the map.
+- **SC-008**: The $2 pack allows buying past 5 stock; the map still shows at most 5.
 - **SC-007**: Empty You health or empty Computer health ends the match as a loss.
 
 ## Assumptions
@@ -106,6 +109,6 @@ The robot and the king computer each have a four-quarter health bar. Demons that
 - Wave N spawns `min(N, 10)` normal demons.
 - Skills target nearby demons and have cooldowns.
 - Characters and the battlefield use painted sprites in `assets/sprites` and `assets/textures`.
-- Save file stores coins, level, and unplaced turret stock on disk. New saves start with 2 turrets.
+- Save file stores coins, level, turret stock, and the $2 unlimited-stock pack. New saves start with 2 turrets.
 - Placed turrets auto-fire at nearby demons. The robot wire-gun still fires the way the wire points.
 - Live online multiplayer is still later; unlock only reveals that tools are coming.

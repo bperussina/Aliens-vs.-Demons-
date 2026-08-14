@@ -12,7 +12,7 @@ A spec-driven game. Specifications in this repo are the source of truth; code fo
 1. Open **Godot 4.7.1** (`/Applications/Godot.app`).
 2. Import this repo folder.
 3. Press **Play** (F5). You should see a **green title menu**.
-4. **Single Player** loads the match. You have health. The computer has health. A round is **10 turns**. Illustrated robot, king-computer, demons, and turrets. Walk with WASD to aim the head-wire. You start with **2 turrets**. **Shop** sells more for **$10**. **Esc** returns to the menu.
+4. **Single Player** loads the match. You have health. The computer has health. A round is **10 turns**. At most **5 turrets** on the map. Shop: turrets **$10**, unlimited stock **$2**. **Esc** returns to the menu.
 
 ```bash
 export PATH="$HOME/.local/bin:$PATH"
