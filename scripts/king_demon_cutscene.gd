@@ -5,4 +5,5 @@ const HEIGHT := 420.0
 
 
 func _ready() -> void:
-	GameArt.attach(self, TEX, HEIGHT, Vector2(0, 20))
+	var sprite := GameArt.attach(self, TEX, HEIGHT, Vector2(0, 20))
+	GameArt.motion(self, sprite, SpriteMotion.Kind.PORTRAIT)

@@ -83,6 +83,11 @@ Placeholder `_draw` geometry MUST NOT be the on-screen character.
 Health bars sit above combatants so remaining health is readable at a glance
 during a swarm.
 
+Painted characters MUST stay alive in motion. Walkers bob and squash with a
+step, idle characters breathe, and they face the way they travel. Whole
+character paintings MUST NOT spin like tokens. Turrets hum and kick when they
+fire. The King Demon cutscene portrait MAY sway.
+
 ## Technology Stack
 
 The game MUST be built in **Godot 4** as a **2D** project using **GDScript**.
@@ -118,4 +123,4 @@ wording), and go through a pull request.
 All PRs MUST be checked against Principles I–V and the Art Direction and
 Technology Stack sections. Unjustified complexity MUST be rejected.
 
-**Version**: 1.6.0 | **Ratified**: 2026-08-13 | **Last Amended**: 2026-08-14
+**Version**: 1.6.1 | **Ratified**: 2026-08-13 | **Last Amended**: 2026-08-14

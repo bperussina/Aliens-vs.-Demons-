@@ -4,17 +4,22 @@ const TEX := preload("res://assets/sprites/robot.png")
 const HEIGHT := 124.0
 const OFFSET := Vector2(0, 10)
 
+var motion: SpriteMotion
+
 
 func _ready() -> void:
-	GameArt.attach(self, TEX, HEIGHT, OFFSET)
+	var sprite := GameArt.attach(self, TEX, HEIGHT, OFFSET)
+	motion = GameArt.motion(self, sprite, SpriteMotion.Kind.WALKER)
+	motion.bob_height = 7.0
+	motion.step_rate = 11.0
 	var muzzle := Marker2D.new()
 	muzzle.name = "Muzzle"
-	muzzle.position = GameArt.muzzle_offset(HEIGHT, OFFSET)
-	add_child(muzzle)
+	muzzle.position = GameArt.muzzle_offset(HEIGHT, Vector2.ZERO)
+	sprite.add_child(muzzle)
 	var base := Marker2D.new()
 	base.name = "WireBase"
-	base.position = OFFSET + Vector2(0.0, -HEIGHT * 0.22)
-	add_child(base)
+	base.position = Vector2(0.0, -HEIGHT * 0.22)
+	sprite.add_child(base)
 	queue_redraw()
 
 
