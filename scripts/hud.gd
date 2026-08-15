@@ -73,7 +73,7 @@ func show_cutscene(on: bool) -> void:
 	_cutscene.visible = on
 	if on:
 		set_shop_open(false)
-		_cutscene_line.text = "The King Demon stays in his chair.\nHe sends normal demons to fight."
+		_cutscene_line.text = "The King Demon stays in his chair.\nHe sends demons. Some have drifted further."
 
 
 func set_shop_open(on: bool) -> void:

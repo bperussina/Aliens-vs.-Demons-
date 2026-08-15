@@ -1,9 +1,9 @@
 <!--
 Sync Impact Report
-- Version change: 1.5.0 → 1.6.0 (Max 5 turrets on the map; $2 unlocks unlimited stock)
-- Modified principles: template placeholders → I–V below
-- Added sections: Art Direction, Technology Stack, Development Workflow
-- Removed sections: none (template slots filled)
+- Version change: 1.6.1 → 1.7.0 (Drifted and Deep Drift kinds scale with turns and Level)
+- Modified principles: IV (stronger drifted kinds must appear)
+- Added sections: Art Direction note on Drifted / Deep Drift
+- Removed sections: none
 - Follow-up TODOs: none
 -->
 
@@ -47,6 +47,9 @@ The king MUST stay alive and MUST be click-moved. Demons hunt the king.
 The robot and the king computer MUST have health. If either reaches zero, the
 player loses. A match is 10 turns at a time.
 
+As turns and player Level rise, stronger **Drifted** kinds MUST appear, and the
+player MUST kill them. The King Demon MUST still stay in the chair.
+
 Bullets MUST come out of the wire on the robot's head, in the direction that
 wire is pointing. No extra computer sitting in the base.
 
@@ -73,6 +76,10 @@ The king IS the computer: a finished illustrated royal desktop (monitor, tower,
 keys, crown), not a second machine sitting next to a person.
 
 Demons MUST read as people who have had robot eyes installed.
+
+Drifted and Deep Drift demons MUST still read as people with robot eyes, further
+gone from human. They MAY hover. They MUST NOT become pixel monsters or a second
+King Demon on the field.
 
 The robot is the player hero and MUST look like a finished illustrated robot,
 not a stick figure or pixel sprite.
@@ -123,4 +130,4 @@ wording), and go through a pull request.
 All PRs MUST be checked against Principles I–V and the Art Direction and
 Technology Stack sections. Unjustified complexity MUST be rejected.
 
-**Version**: 1.6.1 | **Ratified**: 2026-08-13 | **Last Amended**: 2026-08-14
+**Version**: 1.7.0 | **Ratified**: 2026-08-13 | **Last Amended**: 2026-08-14
