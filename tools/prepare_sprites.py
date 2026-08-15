@@ -100,6 +100,14 @@ def write_bullet() -> None:
 
 
 if __name__ == "__main__":
-	for name in ("robot.png", "king.png", "demon.png", "king_demon.png", "turret.png"):
+	for name in (
+		"robot.png",
+		"king.png",
+		"demon.png",
+		"drifted_demon.png",
+		"deep_drift_demon.png",
+		"king_demon.png",
+		"turret.png",
+	):
 		process(name)
 	write_bullet()

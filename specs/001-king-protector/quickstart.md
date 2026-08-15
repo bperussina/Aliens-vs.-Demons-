@@ -39,10 +39,12 @@ godot --headless --path . --quit
 - The robot nearby
 - WASD or arrows move the robot; the camera slides with him
 - Walking characters bounce with a step; they do not slide like stickers
+- Later turns bring hovering Drifted demons, then Deep Drift; you have to kill them
 
 ## Fail if
 
 - Characters look blocky/pixelated
 - The robot, king, or demons ice-skate without a walk bounce
+- Every wave is only the same normal demon after Turn 3
 - Camera does not follow the robot
 - Godot asks to convert from an older version (wrong engine)

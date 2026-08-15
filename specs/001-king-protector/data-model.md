@@ -21,9 +21,11 @@ In-memory match objects. Nothing is saved between runs in this baseline.
 ## Demon (not spawned in setup slice)
 
 - `position`
-- `health` / `max_health`
+- `kind`: Normal | Drifted | Deep Drift
+- `health` / `max_health` (8 / 16 / 24 hits, plus a small Level bump)
 - `target`: the King
-- Look: person with installed robot eyes
+- Look: person with installed robot eyes. Drifted and Deep Drift are further gone and hover.
+- Coins: $10 / $20 / $35
 - Health bar above body
 
 ## Turret

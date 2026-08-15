@@ -140,15 +140,20 @@ func _start_wave(wave: int) -> void:
 		return
 	_phase = Phase.WAVE
 	_wave = wave
-	_hud.set_status("Turn %d / %d" % [_wave, TURNS])
-	var count := mini(_wave, 10)
-	_alive = count
-	for i in count:
-		_spawn_demon(i, count)
+	var kinds := DemonCatalog.roster(_wave, SaveData.level)
+	var extra := DemonCatalog.wave_label(kinds)
+	if extra.is_empty():
+		_hud.set_status("Turn %d / %d" % [_wave, TURNS])
+	else:
+		_hud.set_status("Turn %d / %d  ·  %s" % [_wave, TURNS, extra])
+	_alive = kinds.size()
+	for i in kinds.size():
+		_spawn_demon(kinds[i], i, kinds.size())
 
 
-func _spawn_demon(index: int, total: int) -> void:
+func _spawn_demon(kind: int, index: int, total: int) -> void:
 	var demon: CharacterBody2D = DEMON_SCENE.instantiate()
+	demon.setup(kind, SaveData.level)
 	var angle := TAU * float(index) / float(maxi(total, 1)) + randf() * 0.2
 	demon.global_position = Vector2(cos(angle), sin(angle)) * 780.0
 	demon.died.connect(_on_demon_died)
@@ -162,7 +167,7 @@ func _on_demon_died() -> void:
 	if _wave >= TURNS:
 		_win_round()
 		return
-	_start_wave(_wave + 1)
+	call_deferred("_start_wave", _wave + 1)
 
 
 func _on_king_died() -> void:

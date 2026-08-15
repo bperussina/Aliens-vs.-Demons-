@@ -75,6 +75,18 @@ The robot, king computer, and demons keep their painted look, but they bounce an
 2. **Given** demons chasing the king, **When** they run, **Then** they bounce toward him and lunge when they bite.
 3. **Given** a turret firing, **When** a shot leaves, **Then** the turret kicks without spinning like a token.
 
+### User Story 9 - Drifted kinds get stronger as you go (Priority: P1)
+
+Later turns and higher Levels bring Drifted demons, then Deep Drift. They still look like people with robot eyes, just further gone. They hover instead of walking. You have to kill them. Turn 1 on Level 1 is still a normal demon. The King Demon stays in the chair.
+
+**Acceptance Scenarios**:
+
+1. **Given** Level 1 Turn 1, **When** combat starts, **Then** a normal demon spawns (person with robot eyes).
+2. **Given** Level 1 Turn 3, **When** the wave starts, **Then** at least one Drifted demon is in the mix, and the HUD mentions Drifted.
+3. **Given** Level 1 Turn 6, **When** the wave starts, **Then** a Deep Drift demon is in the mix.
+4. **Given** a higher player Level, **When** a new match starts, **Then** stronger kinds show up sooner and hits take more to kill.
+5. **Given** a Drifted or Deep Drift demon, **When** the player kills it, **Then** it dies and pays more coins than a normal demon.
+
 ## Requirements *(mandatory)*
 
 - **FR-001**: Launch MUST be the green title menu.
@@ -99,10 +111,12 @@ The robot, king computer, and demons keep their painted look, but they bounce an
 - **FR-018**: The robot and the king computer MUST each have visible health. Demons MUST damage the computer in melee and the robot on contact.
 - **FR-022**: Painted characters MUST animate while they move (step bob, squash, face travel). They MUST NOT slide as unmoving stickers or spin as whole-token sprites.
 - **FR-019**: The match MUST end in a loss if You health or Computer health reaches zero.
+- **FR-023**: Later turns and higher player Levels MUST spawn Drifted, then Deep Drift kinds. The player MUST kill them. Turn 1 on Level 1 MUST still spawn a normal demon.
+- **FR-024**: Drifted kinds MUST stay illustrated people with robot eyes, further gone. They MUST hover. Killing them MUST grant more coins than a normal demon ($20 Drifted, $35 Deep Drift).
 
 ## Key Entities
 
-- **King** (the computer you protect, has health), **Robot** (you, has health), **Turret**, **Shop**, **Normal Demon**, **King Demon** (cutscene only), **Turn**, **Coins**, **Level**
+- **King** (the computer you protect, has health), **Robot** (you, has health), **Turret**, **Shop**, **Normal Demon**, **Drifted Demon**, **Deep Drift Demon**, **King Demon** (cutscene only), **Turn**, **Coins**, **Level**
 
 ## Success Criteria
 
@@ -115,10 +129,11 @@ The robot, king computer, and demons keep their painted look, but they bounce an
 - **SC-008**: The $2 pack allows buying past 5 stock; the map still shows at most 5.
 - **SC-007**: Empty You health or empty Computer health ends the match as a loss.
 - **SC-009**: Walking characters bob with a step; they do not ice-skate or spin like tokens.
+- **SC-010**: Level 1 Turn 3 includes a Drifted demon; Level 1 Turn 6 includes Deep Drift; killing them pays more than $10.
 
 ## Assumptions
 
-- Wave N spawns `min(N, 10)` normal demons.
+- Wave N spawns `min(N, 10) + min(Level - 1, 4)` demons. Level 1 Turn 1 is one normal demon. Drifted enter from Turn 3 (or Level 2). Deep Drift enter from Turn 6 (or Level 4). Hits scale slowly with Level.
 - Skills target nearby demons and have cooldowns.
 - Characters and the battlefield use painted sprites in `assets/sprites` and `assets/textures`.
 - Walk, idle, bite, and turret-fire motion is procedural on those paintings (bob, squash, flip, recoil), not a second pixel walk-cycle sheet.

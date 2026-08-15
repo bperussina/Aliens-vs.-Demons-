@@ -7,6 +7,7 @@ var kind: Kind = Kind.WALKER
 var bob_height := 8.0
 var step_rate := 10.0
 var allow_flip := true
+var floaty := false
 
 var _sprite: Sprite2D
 var _base_pos := Vector2.ZERO
@@ -75,7 +76,12 @@ func _process(delta: float) -> void:
 	var tilt := 0.0
 	match kind:
 		Kind.WALKER:
-			if _moving:
+			if floaty:
+				bob = (wave * 0.35 + 0.75) * bob_height
+				var breath := sin(_phase * 0.55)
+				squash = Vector2(1.0 + breath * 0.03, 1.0 - breath * 0.025)
+				tilt = wave * 0.06
+			elif _moving:
 				bob = absf(wave) * bob_height
 				var land := 1.0 - absf(wave)
 				squash = Vector2(1.0 + land * 0.1, 1.0 - land * 0.1)
