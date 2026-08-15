@@ -13,5 +13,13 @@ static func attach(host: Node2D, texture: Texture2D, world_height: float, offset
 	return sprite
 
 
+static func motion(host: Node, sprite: Sprite2D, kind: SpriteMotion.Kind = SpriteMotion.Kind.WALKER) -> SpriteMotion:
+	var motion := SpriteMotion.new()
+	motion.name = "Motion"
+	host.add_child(motion)
+	motion.setup(sprite, kind)
+	return motion
+
+
 static func muzzle_offset(world_height: float, offset := Vector2.ZERO) -> Vector2:
 	return offset + Vector2(0.0, -world_height * 0.48)

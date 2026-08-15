@@ -65,6 +65,16 @@ The robot and the king computer each have a four-quarter health bar. Demons that
 3. **Given** You or Computer health hits zero, **When** the next moment plays, **Then** the match is lost and Esc returns to the menu.
 4. **Given** Turn 10 is cleared with both still alive, **When** the round ends, **Then** the player wins and levels up.
 
+### User Story 8 - Painted characters move like they are alive (Priority: P1)
+
+The robot, king computer, and demons keep their painted look, but they bounce and squash when they walk so they do not slide like stickers. They face left or right with travel. Idle characters breathe. Turrets stay planted and kick when they shoot. The King Demon in the chair sways.
+
+**Acceptance Scenarios**:
+
+1. **Given** the robot is walking, **When** the player watches, **Then** the painting bobs with a step and does not spin in a circle.
+2. **Given** demons chasing the king, **When** they run, **Then** they bounce toward him and lunge when they bite.
+3. **Given** a turret firing, **When** a shot leaves, **Then** the turret kicks without spinning like a token.
+
 ## Requirements *(mandatory)*
 
 - **FR-001**: Launch MUST be the green title menu.
@@ -87,6 +97,7 @@ The robot and the king computer each have a four-quarter health bar. Demons that
 - **FR-020**: Without the $2 pack, unplaced stock MUST NOT exceed 5.
 - **FR-021**: Spending $2 MUST unlock unlimited turret stock. The on-map cap MUST stay 5.
 - **FR-018**: The robot and the king computer MUST each have visible health. Demons MUST damage the computer in melee and the robot on contact.
+- **FR-022**: Painted characters MUST animate while they move (step bob, squash, face travel). They MUST NOT slide as unmoving stickers or spin as whole-token sprites.
 - **FR-019**: The match MUST end in a loss if You health or Computer health reaches zero.
 
 ## Key Entities
@@ -103,12 +114,14 @@ The robot and the king computer each have a four-quarter health bar. Demons that
 - **SC-006**: A sixth map click does not plant a turret while 5 are already on the map.
 - **SC-008**: The $2 pack allows buying past 5 stock; the map still shows at most 5.
 - **SC-007**: Empty You health or empty Computer health ends the match as a loss.
+- **SC-009**: Walking characters bob with a step; they do not ice-skate or spin like tokens.
 
 ## Assumptions
 
 - Wave N spawns `min(N, 10)` normal demons.
 - Skills target nearby demons and have cooldowns.
 - Characters and the battlefield use painted sprites in `assets/sprites` and `assets/textures`.
+- Walk, idle, bite, and turret-fire motion is procedural on those paintings (bob, squash, flip, recoil), not a second pixel walk-cycle sheet.
 - Save file stores coins, level, turret stock, and the $2 unlimited-stock pack. New saves start with 2 turrets.
 - Placed turrets auto-fire at nearby demons. The robot wire-gun still fires the way the wire points.
 - Live online multiplayer is still later; unlock only reveals that tools are coming.

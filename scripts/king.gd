@@ -15,11 +15,15 @@ var hits_left: int = 24
 var _has_target := false
 var _target := Vector2.ZERO
 var _hurt_until_ms: int = 0
+var _motion: SpriteMotion
 
 
 func _ready() -> void:
 	add_to_group("king")
-	GameArt.attach(self, TEX, HEIGHT, OFFSET)
+	var sprite := GameArt.attach(self, TEX, HEIGHT, OFFSET)
+	_motion = GameArt.motion(self, sprite, SpriteMotion.Kind.WALKER)
+	_motion.bob_height = 5.5
+	_motion.step_rate = 7.5
 	_add_health_bar()
 	queue_redraw()
 
@@ -33,6 +37,8 @@ func hit(amount: int = 1) -> void:
 	hits_left = maxi(0, hits_left - amount)
 	modulate = Color(1.0, 0.72, 0.72)
 	get_tree().create_timer(0.12).timeout.connect(func() -> void: modulate = Color.WHITE)
+	if _motion:
+		_motion.punch_recoil(0.9)
 	if hits_left <= 0:
 		died.emit()
 
@@ -60,19 +66,28 @@ func _physics_process(_delta: float) -> void:
 	if hits_left <= 0:
 		velocity = Vector2.ZERO
 		move_and_slide()
+		_sync_motion()
 		return
 	if not _has_target:
 		velocity = Vector2.ZERO
 		move_and_slide()
+		_sync_motion()
 		return
 	var offset := _target - global_position
 	if offset.length() <= 10.0:
 		_has_target = false
 		velocity = Vector2.ZERO
 		move_and_slide()
+		_sync_motion()
 		return
 	velocity = offset.normalized() * WALK_SPEED
 	move_and_slide()
+	_sync_motion()
+
+
+func _sync_motion() -> void:
+	if _motion:
+		_motion.set_moving(velocity.length() > 8.0, velocity)
 
 
 func _on_click_area_input_event(_viewport: Node, event: InputEvent, _shape_idx: int) -> void:

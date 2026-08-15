@@ -14,16 +14,22 @@ var max_hits: int = 8
 var hits_left: int = 8
 var _slow_until_ms: int = 0
 var _bite_cool: float = 0.0
+var _motion: SpriteMotion
 
 
 func _ready() -> void:
 	add_to_group("demons")
-	GameArt.attach(self, TEX, HEIGHT, OFFSET)
+	var sprite := GameArt.attach(self, TEX, HEIGHT, OFFSET)
+	_motion = GameArt.motion(self, sprite, SpriteMotion.Kind.WALKER)
+	_motion.bob_height = 9.0
+	_motion.step_rate = 12.0
 	queue_redraw()
 
 
 func hit(amount: int = 1) -> void:
 	hits_left = maxi(0, hits_left - amount)
+	if _motion:
+		_motion.punch_recoil(0.8)
 	if hits_left <= 0:
 		died.emit()
 		SaveData.add_coins(SaveData.COINS_PER_DEMON)
@@ -49,14 +55,22 @@ func _physics_process(delta: float) -> void:
 	else:
 		velocity = to_king.normalized() * speed
 	move_and_slide()
+	if _motion:
+		_motion.step_rate = 6.5 if Time.get_ticks_msec() < _slow_until_ms else 12.0
+		_motion.face_toward(to_king)
+		_motion.set_moving(velocity.length() > 8.0, velocity)
 	if _bite_cool > 0.0:
 		return
 	if to_king.length() <= KING_REACH and king.has_method("hit"):
 		_bite_cool = BITE_EVERY
+		if _motion:
+			_motion.punch_lunge(to_king)
 		king.hit(1)
 		return
 	if robot and robot.has_method("hit") and global_position.distance_to(robot.global_position) <= ROBOT_REACH:
 		_bite_cool = BITE_EVERY
+		if _motion:
+			_motion.punch_lunge(robot.global_position - global_position)
 		robot.hit(1)
 
 

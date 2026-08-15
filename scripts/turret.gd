@@ -16,12 +16,15 @@ var _cool: float = 0.0
 var _barrel := -PI * 0.5
 var _acquire: int = 0
 var _target: Node2D = null
+var _motion: SpriteMotion
 
 
 func _ready() -> void:
 	if not preview:
 		add_to_group("turrets")
-	GameArt.attach(self, TEX, HEIGHT, Vector2.ZERO)
+	var sprite := GameArt.attach(self, TEX, HEIGHT, Vector2.ZERO)
+	_motion = GameArt.motion(self, sprite, SpriteMotion.Kind.TURRET)
+	_motion.allow_flip = false
 	queue_redraw()
 
 
@@ -36,14 +39,19 @@ func _process(delta: float) -> void:
 	if _acquire <= 0:
 		_target = _nearest_demon()
 		_acquire = 6
+	rotation = 0.0
 	if _target != null and is_instance_valid(_target):
-		_barrel = (_target.global_position - global_position).angle()
-		rotation = _barrel + PI * 0.5
+		var to_target := _target.global_position - global_position
+		_barrel = to_target.angle()
+		if _motion:
+			_motion.set_aim_lean(clampf(to_target.x / 420.0, -1.0, 1.0) * 0.16)
 		if _cool <= 0.0:
 			_cool = FIRE_EVERY
 			_fire()
 	else:
 		_target = null
+		if _motion:
+			_motion.set_aim_lean(0.0)
 
 
 func _fire() -> void:
@@ -54,6 +62,8 @@ func _fire() -> void:
 	bullet.damage = 1
 	bullet.tint = Color("ffd36a")
 	get_tree().current_scene.add_child(bullet)
+	if _motion:
+		_motion.punch_recoil(1.0)
 
 
 func _nearest_demon() -> Node2D:

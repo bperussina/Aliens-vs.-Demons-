@@ -16,6 +16,7 @@ var max_hits: int = 8
 var hits_left: int = 8
 var _cool: float = 0.0
 var _hurt_until_ms: int = 0
+var _aim := Vector2.UP
 
 
 func _ready() -> void:
@@ -32,6 +33,8 @@ func hit(amount: int = 1) -> void:
 	hits_left = maxi(0, hits_left - amount)
 	modulate = Color(1.0, 0.7, 0.7)
 	get_tree().create_timer(0.12).timeout.connect(func() -> void: modulate = Color.WHITE)
+	if _visual.motion:
+		_visual.motion.punch_recoil(1.0)
 	if hits_left <= 0:
 		died.emit()
 
@@ -40,12 +43,16 @@ func _physics_process(_delta: float) -> void:
 	if hits_left <= 0:
 		velocity = Vector2.ZERO
 		move_and_slide()
+		if _visual.motion:
+			_visual.motion.set_moving(false)
 		return
 	var direction := _move_direction()
 	velocity = direction * SPEED
 	move_and_slide()
 	if direction != Vector2.ZERO:
-		_visual.rotation = direction.angle() + PI * 0.5
+		_aim = direction
+	if _visual.motion:
+		_visual.motion.set_moving(direction != Vector2.ZERO, direction)
 
 
 func _process(delta: float) -> void:
@@ -58,17 +65,21 @@ func _process(delta: float) -> void:
 		return
 	_cool = FIRE_EVERY
 	_fire_from_wire()
+	if _visual.motion:
+		_visual.motion.punch_recoil(0.85)
 
 
 func muzzle_global() -> Vector2:
-	var marker := _visual.get_node_or_null("Muzzle") as Node2D
+	var marker := _visual.get_node_or_null("Art/Muzzle") as Node2D
 	if marker:
 		return marker.global_position
 	return _visual.to_global(WIRE_TIP)
 
 
 func wire_heading() -> Vector2:
-	var base := _visual.get_node_or_null("WireBase") as Node2D
+	if _aim.length() > 0.1:
+		return _aim.normalized()
+	var base := _visual.get_node_or_null("Art/WireBase") as Node2D
 	var from := base.global_position if base else _visual.to_global(WIRE_BASE)
 	return (muzzle_global() - from).normalized()
 

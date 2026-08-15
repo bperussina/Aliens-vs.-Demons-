@@ -38,9 +38,11 @@ godot --headless --path . --quit
 - The king: skin-blob head, clay mouth, white box, yellow paper in a hole
 - The robot nearby
 - WASD or arrows move the robot; the camera slides with him
+- Walking characters bounce with a step; they do not slide like stickers
 
 ## Fail if
 
 - Characters look blocky/pixelated
+- The robot, king, or demons ice-skate without a walk bounce
 - Camera does not follow the robot
 - Godot asks to convert from an older version (wrong engine)
